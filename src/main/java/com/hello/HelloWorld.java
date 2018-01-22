@@ -1,4 +1,7 @@
-package main.java.com.hello;
+package com.hello;
+
+
+import com.hello.Greeter;
 
 public class HelloWorld {
     public static void main(String[] args) {
