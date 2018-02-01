@@ -7,42 +7,44 @@ import algorithms.AlgorithmStanfordCoreNLP;
 import algorithms.AlgoritmosClasificacion;
 import analizer.ClasificadorDeSentimientos;
 import database.DBHashTag;
+import database.DBReplyTweets;
 import database.DataBase;
 
 import java.util.Map;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-//LLAMAR A QLIK DIRECTAMENTE??
-//http://localhost:8080/keywords?keyword=mambo&algorithm=2
+//http://localhost:8080/replies?id=958406889288716290&user=LeoDiCaprio&algorithm=2
 
 @RestController
-public class KeywordController {
+public class RepliesController {
 
-	@RequestMapping("/keywords")
-	public String getKeywords(@RequestParam Map<String, String> requestParams) {
+	@RequestMapping("/replies")
+	public String getReplies(@RequestParam Map<String, String> requestParams) {
 
-		String keyword = requestParams.get("keyword");
+		String id = requestParams.get("id");
+		String user = requestParams.get("user");
 		String algorithm = requestParams.get("algorithm");
-
+		
 		AlgoritmosClasificacion algo = null;
 		if (algorithm.equals("1")) {
 			algo = new AlgorithmStanfordCoreNLP();
 		} else {
 			algo = new AlgorithmLingPipe();
 		}
-
+		
 		DataBase db;
-		db = new DBHashTag();
-		db.getTweets(keyword);
+		db = new DBReplyTweets(id);
+		db.getTweets(user);
 		db.closeFile();
-
+		
 		ClasificadorDeSentimientos cl = new ClasificadorDeSentimientos(algo);
 		cl.clasificarTweets();
-
-		return "Hola Ing. Mastrángelo: getKeywords finalizo exitosamente";
-
+		
+		
+		
+		
+		return "Hola Ing. Mastrángelo: getReplies finalizo exitosamente";
 	}
 
 }
