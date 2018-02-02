@@ -10,9 +10,8 @@ import twitter4j.TwitterFactory;
 
 public class DBHashTag extends DataBase {
 
-	public DBHashTag(String fileName) {
-		super(fileName);
-
+	public DBHashTag() {
+		super();
 	}
 
 	@Override
@@ -26,6 +25,7 @@ public class DBHashTag extends DataBase {
 		//https://twitter.com/BT21_/status/956125656034586624 retwiteado 66K veces
 		
 		//O porq una persona publica lo mismo identico
+		
 
 		Twitter twitter = new TwitterFactory().getInstance();
 		Query query = new Query(hashTag);

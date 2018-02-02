@@ -9,21 +9,20 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 
 public class DBReplyTweets extends DataBase{
+	
+	long tweetId;
 
-	public DBReplyTweets(String fileName) {
-		super(fileName);
-		
+	public DBReplyTweets(String tID) {
+		super();
+		tweetId=Long.parseLong(tID, 10);		
 	}
 
 	@Override
 	public void getTweets(String userName) {
 		//ANDA DE 10
 		//FALTA: RESOLVER COMO PASARLE EL ID del tweet
-				
+		//956518245154148352L		
 		Twitter twitter = TwitterFactory.getSingleton();
-		
-		long tweetId=956518245154148352L;
-
 	    
 	    Query query = new Query("[to:"+userName+"]");
 	    query.count(100);

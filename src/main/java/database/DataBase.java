@@ -11,10 +11,10 @@ public abstract class DataBase {
 	FileWriter fw = null;
 	ExtractorTweets extractorT=new ExtractorTweets();
 
-	public DataBase(String fileName) {
+	public DataBase() {
 		// constructor solo crea e inicializa el archivo
 		try {
-			fw = new FileWriter(fileName);
+			fw = new FileWriter("TweetsDB");
 			bw = new BufferedWriter(fw);
 
 		} catch (IOException e) {

@@ -42,31 +42,32 @@ public class ClasificadorDeSentimientos {
 		}
 	}
 
-	public void clasificarTweets(String fileName) {
+	public void clasificarTweets() {
 
+		String fileName="TweetsDB";
 		int sentimiento = -1;
 
 		// solo toma una linea, la envia a clasificar y guarda el resultado
 		try {
 			br = new BufferedReader(new FileReader(fileName));
-
+			
 			String line = br.readLine();
 
 			while (line != null) {
-
+				
 				if ((line.length() != 0) && (line != "\n") && (line != " ")) {
 					// mando a clasificar
+					
 					sentimiento = algoritmh.clasificar(line);
-
+					
 					// almaceno en algun archivo csv
-
-					System.out.println(line);// SACAAAAARRRRRRRRRR
 
 					mostrarSentimiento(sentimiento);
 				}
 				line = br.readLine();
 
 			}
+			
 			br.close();
 
 		} catch (FileNotFoundException e) {
