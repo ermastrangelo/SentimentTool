@@ -1,4 +1,5 @@
-package com.hello;
+package controllers;
+
 
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,21 +9,21 @@ import algorithms.AlgoritmosClasificacion;
 import analizer.ClasificadorDeSentimientos;
 import database.DBHashTag;
 import database.DBReplyTweets;
+import database.DBUserTweets;
 import database.DataBase;
 
 import java.util.Map;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-//http://localhost:8080/replies?id=958406889288716290&user=LeoDiCaprio&algorithm=2
+//http://localhost:8080/usertweets?user=e_mastrangelo&algorithm=2
 
 @RestController
-public class RepliesController {
+public class UserTweetsController {
 
-	@RequestMapping("/replies")
-	public String getReplies(@RequestParam Map<String, String> requestParams) {
+	@RequestMapping("/usertweets")
+	public String getUserTweets(@RequestParam Map<String, String> requestParams) {
 
-		String id = requestParams.get("id");
 		String user = requestParams.get("user");
 		String algorithm = requestParams.get("algorithm");
 		
@@ -34,17 +35,15 @@ public class RepliesController {
 		}
 		
 		DataBase db;
-		db = new DBReplyTweets(id);
+		db = new DBUserTweets();
 		db.getTweets(user);
 		db.closeFile();
 		
 		ClasificadorDeSentimientos cl = new ClasificadorDeSentimientos(algo);
 		cl.clasificarTweets();
-		
-		
-		
-		
-		return "Hola Ing. Mastrángelo: getReplies finalizo exitosamente";
+
+		return "Hola Ing. Mastrángelo: getUserTweets finalizo exitosamente";
 	}
 
 }
+
