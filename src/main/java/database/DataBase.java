@@ -5,7 +5,14 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import algorithms.AlgoritmosClasificacion;
+
 public abstract class DataBase {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(DataBase.class);
 
 	BufferedWriter bw = null;
 	FileWriter fw = null;
