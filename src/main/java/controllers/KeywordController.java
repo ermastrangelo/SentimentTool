@@ -11,6 +11,8 @@ import database.DataBase;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 public class KeywordController {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(KeywordController.class);
 
 	@RequestMapping("/keywords")
 	public String getKeywords(@RequestParam Map<String, String> requestParams) {
@@ -29,17 +33,24 @@ public class KeywordController {
 		AlgoritmosClasificacion algo = null;
 		if (algorithm.equals("1")) {
 			algo = new AlgorithmStanfordCoreNLP();
+			LOGGER.info("Algorithm StanfordCoreNLP created.");
 		} else {
 			algo = new AlgorithmLingPipe();
+			LOGGER.info("Algorithm LingPipe created.");
+			
 		}
 
 		DataBase db;
 		db = new DBHashTag();
+		LOGGER.info("Starting to get tweets with keyword: "+keyword+".");
 		db.getTweets(keyword);
 		db.closeFile();
-
+		
+		
+		LOGGER.info("Starting to clasify tweets.");		
 		ClasificadorDeSentimientos cl = new ClasificadorDeSentimientos(algo);
 		cl.clasificarTweets();
+		LOGGER.info("Finish Clasification");
 
 		return "Hola Ing. Mastrángelo: getKeywords finalizo exitosamente";
 
