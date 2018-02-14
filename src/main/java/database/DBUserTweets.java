@@ -26,8 +26,10 @@ public class DBUserTweets extends DataBase {
 		// ANDA DE 10! Baje 1400 y quiza se puede mas
 		// FALTA: COMO SABER CUANTOS BAJAR
 
-		if (cantBajar==0){cantBajar=500;}
-		
+		if (cantBajar == 0) {
+			cantBajar = 500;
+		}
+
 		int cantBajadaAnt = 0;
 		boolean finish = false;
 
@@ -45,7 +47,7 @@ public class DBUserTweets extends DataBase {
 					if (t.getId() < lastID)
 						lastID = t.getId();
 			} catch (TwitterException te) {
-				System.out.println("Couldn't connect: " + te);
+				LOGGER.error("Couldn't connect Twitter API: " + te.getMessage());
 			}
 
 			pg.setMaxId(lastID - 1);
@@ -55,13 +57,13 @@ public class DBUserTweets extends DataBase {
 			cantBajadaAnt = tweets.size();
 		}
 
-		int bajados=cantBajar;
-		
+		int bajados = cantBajar;
+
 		for (Status t : tweets) {
-			if (cantBajar>0){
+			if (cantBajar > 0) {
 				writeDb(t.getText());
 				cantBajar--;
-			}else{ 
+			} else {
 				LOGGER.info("Downloaded tweets: " + bajados + ".");
 				return;
 			}

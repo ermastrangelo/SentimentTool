@@ -25,7 +25,7 @@ public abstract class DataBase {
 			bw = new BufferedWriter(fw);
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error("Creating TweetsDB : " + e.getMessage());
 		}
 	}
 
@@ -39,7 +39,7 @@ public abstract class DataBase {
 				bw.write(tweetPreprocesado + "\n");// bw.write(tweetPreprocesado+"
 			}	// ");
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error("Writing line: " + e.getMessage());
 		}
 	}
 
@@ -48,7 +48,7 @@ public abstract class DataBase {
 		try {
 			bw.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error("Closing TweetsDB file: " + e.getMessage());
 		}
 	}
 

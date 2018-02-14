@@ -25,9 +25,9 @@ public class AlgorithmLingPipe implements AlgoritmosClasificacion {// clasifyerL
 			clasificador = (LMClassifier) AbstractExternalizable.readObject(new File("classifier.txt"));
 			categories = clasificador.categories();
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			LOGGER.error("Opening clasifier.txt 1: "+ e.getMessage());
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error("Opening clasifier.txt 2: "+ e.getMessage());
 		}
 
 	}
@@ -35,7 +35,6 @@ public class AlgorithmLingPipe implements AlgoritmosClasificacion {// clasifyerL
 	@Override
 	public int clasificar(String tweet) {
 		ConditionalClassification classification = clasificador.classify(tweet);
-		// System.out.println(clasificador.classify(tweet));
 
 		if (classification.bestCategory().equals("pos")) {
 			return 3;

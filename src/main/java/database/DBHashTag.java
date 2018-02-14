@@ -22,9 +22,9 @@ public class DBHashTag extends DataBase {
 	}
 
 	@Override
-	public void getTweets(String hashTag,int cantBajar) {
-		//cantBajar tiene como default 500
-		
+	public void getTweets(String hashTag, int cantBajar) {
+		// cantBajar tiene como default 500
+
 		// Sive para Keywords tambien, "eric" @ericBana hola.
 
 		// Puede haber lineas repetidas si es RT ...ELIMINO?
@@ -34,12 +34,14 @@ public class DBHashTag extends DataBase {
 		// https://twitter.com/BT21_/status/956125656034586624 retwiteado 66K
 		// veces
 		// ó porq una persona publica lo mismo identico
-		
-		if (cantBajar==0){cantBajar=500;}
-		
+
+		if (cantBajar == 0) {
+			cantBajar = 500;
+		}
+
 		Twitter twitter = new TwitterFactory().getInstance();
 		Query query = new Query(hashTag);
-		
+
 		long lastID = Long.MAX_VALUE;
 		ArrayList<Status> tweets = new ArrayList<Status>();
 		boolean finish = false;
@@ -50,7 +52,7 @@ public class DBHashTag extends DataBase {
 				query.setCount(100);
 			else
 				query.setCount(cantBajar - tweets.size());
-			
+
 			try {
 				QueryResult result = twitter.search(query);
 
@@ -67,7 +69,7 @@ public class DBHashTag extends DataBase {
 			}
 
 			catch (TwitterException te) {
-				System.out.println("Couldn't connect: " + te);
+				LOGGER.error("Couldn't connect Twitter API: " + te);
 			}
 
 			query.setMaxId(lastID - 1);
@@ -76,7 +78,7 @@ public class DBHashTag extends DataBase {
 		for (Status t : tweets) {
 			writeDb(t.getText());
 		}
-		
+
 		LOGGER.info("Downloaded tweets: " + tweets.size() + ".");
 
 	}
