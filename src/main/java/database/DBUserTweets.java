@@ -21,21 +21,23 @@ public class DBUserTweets extends DataBase {
 	}
 
 	@Override
-	public void getTweets(String userName) {
+	public void getTweets(String userName, int cantBajar) {
 
 		// ANDA DE 10! Baje 1400 y quiza se puede mas
 		// FALTA: COMO SABER CUANTOS BAJAR
 
+		if (cantBajar==0){cantBajar=500;}
+		
 		int cantBajadaAnt = 0;
 		boolean finish = false;
 
 		Paging pg = new Paging();
 		Twitter twitter = new TwitterFactory().getInstance();
-		int numberOfTweets = 1000;// VER COMO HACER PARAMETRIZABLE
+
 		long lastID = Long.MAX_VALUE;
 		ArrayList<Status> tweets = new ArrayList<Status>();
 
-		while ((tweets.size() < numberOfTweets) && (!finish)) {
+		while ((tweets.size() < cantBajar) && (!finish)) {
 			try {
 				tweets.addAll(twitter.getUserTimeline(userName, pg));
 				LOGGER.info("Gathered " + tweets.size() + " tweets");
@@ -53,8 +55,16 @@ public class DBUserTweets extends DataBase {
 			cantBajadaAnt = tweets.size();
 		}
 
+		int bajados=cantBajar;
+		
 		for (Status t : tweets) {
-			writeDb(t.getText());
+			if (cantBajar>0){
+				writeDb(t.getText());
+				cantBajar--;
+			}else{ 
+				LOGGER.info("Downloaded tweets: " + bajados + ".");
+				return;
+			}
 		}
 
 		LOGGER.info("Downloaded tweets: " + tweets.size() + ".");

@@ -3,11 +3,19 @@ package algorithms;
 import java.io.File;
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.aliasi.classify.ConditionalClassification;
 import com.aliasi.classify.LMClassifier;
 import com.aliasi.util.AbstractExternalizable;
 
+import controllers.KeywordController;
+
 public class AlgorithmLingPipe implements AlgoritmosClasificacion {// clasifyerLoader
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(AlgorithmLingPipe.class);
+	
 	String[] categories;
 	LMClassifier clasificador;
 

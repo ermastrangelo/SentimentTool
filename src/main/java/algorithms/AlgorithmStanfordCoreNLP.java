@@ -2,6 +2,10 @@ package algorithms;
 
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import database.DBHashTag;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations;
 import edu.stanford.nlp.pipeline.Annotation;
@@ -15,10 +19,9 @@ import edu.stanford.nlp.util.CoreMap;
 
 public class AlgorithmStanfordCoreNLP implements AlgoritmosClasificacion{
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(AlgorithmStanfordCoreNLP.class);
 	
-	
-	
-	
+		
 	private String toCss(int sentiment) {
         switch (sentiment) {
         case 0:
@@ -38,12 +41,12 @@ public class AlgorithmStanfordCoreNLP implements AlgoritmosClasificacion{
 	
 	@Override
 	public int clasificar(String tweet) {
-		
+		LOGGER.info("UNOOOOO");
 		Properties props = new Properties();
         props.setProperty("annotators", "tokenize, ssplit, parse, sentiment");
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
         int mainSentiment = 0;
-        
+        LOGGER.info("DOOOOOOS");
         if (tweet != null && tweet.length() > 0) {
             int longest = 0;
             Annotation annotation = pipeline.process(tweet);
@@ -59,12 +62,12 @@ public class AlgorithmStanfordCoreNLP implements AlgoritmosClasificacion{
  
             }
         }
-        
+        LOGGER.info("TREEEEES");
         if ( mainSentiment > 4 || mainSentiment < 0) {
             return -1;
             
         }
-
+        LOGGER.info("CUATROOO");
         //System.out.println("Tweet: "+tweet+" \nSentiment: "+toCss(mainSentiment));
         return mainSentiment;
 		

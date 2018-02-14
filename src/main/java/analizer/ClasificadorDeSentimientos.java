@@ -62,7 +62,7 @@ public class ClasificadorDeSentimientos {
 					
 					// almaceno en algun archivo csv
 
-					mostrarSentimiento(sentimiento);
+					//mostrarSentimiento(sentimiento);
 				}
 				line = br.readLine();
 

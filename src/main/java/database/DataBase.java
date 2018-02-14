@@ -31,12 +31,13 @@ public abstract class DataBase {
 
 	public void writeDb(String tweet) {
 		// preprocesa y guarda en la base de datos el tweet dado
-		String tweetPreprocesado = extractorT.preProcesarTweet(tweet);
 
+		String tweetPreprocesado = extractorT.preProcesarTweet(tweet);
+		
 		try {
-			if (tweetPreprocesado.length() > 1)
+			if (tweetPreprocesado.length() > 1){
 				bw.write(tweetPreprocesado + "\n");// bw.write(tweetPreprocesado+"
-													// ");
+			}	// ");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -51,6 +52,6 @@ public abstract class DataBase {
 		}
 	}
 
-	public abstract void getTweets(String userName);
+	public abstract void getTweets(String userName,int cantBajar);
 
 }

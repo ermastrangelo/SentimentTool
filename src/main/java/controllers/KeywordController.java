@@ -17,18 +17,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 //LLAMAR A QLIK DIRECTAMENTE??
-//http://localhost:8080/keywords?keyword=mambo&algorithm=2
+//http://localhost:8080/keywords?keyword=mambo&algorithm=2&cantBajar=500
 
 @RestController
 public class KeywordController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(KeywordController.class);
-
+	
 	@RequestMapping("/keywords")
 	public String getKeywords(@RequestParam Map<String, String> requestParams) {
+		
+		LOGGER.info(" -------------BEGIN KEYWORD CONTROLLER--------------");
 
 		String keyword = requestParams.get("keyword");
 		String algorithm = requestParams.get("algorithm");
+		String cantBajarString = requestParams.get("cantBajar");
+		int cantBajar = Integer.parseInt(cantBajarString);
 
 		AlgoritmosClasificacion algo = null;
 		if (algorithm.equals("1")) {
@@ -43,7 +47,7 @@ public class KeywordController {
 		DataBase db;
 		db = new DBHashTag();
 		LOGGER.info("Starting to get tweets with keyword: "+keyword+".");
-		db.getTweets(keyword);
+		db.getTweets(keyword,cantBajar);
 		db.closeFile();
 		
 		
@@ -51,8 +55,8 @@ public class KeywordController {
 		ClasificadorDeSentimientos cl = new ClasificadorDeSentimientos(algo);
 		cl.clasificarTweets();
 		LOGGER.info("Finish Clasification");
-
-		return "Hola Ing. Mastrángelo: getKeywords finalizo exitosamente";
+		LOGGER.info(" -------------END KEYWORD CONTROLLER--------------");
+		return "Hola Ing. Mastrángelo: getKeywords finalizo exitosamente Feriado";
 
 	}
 

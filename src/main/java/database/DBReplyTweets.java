@@ -25,7 +25,9 @@ public class DBReplyTweets extends DataBase {
 	}
 
 	@Override
-	public void getTweets(String userName) {
+	public void getTweets(String userName,int cantBajar) {
+		//poner a cantBajar=0 para que baje todos
+		
 		// ANDA DE 10
 		// FALTA: RESOLVER COMO PASARLE EL ID del tweet
 		// 956518245154148352L
@@ -57,10 +59,15 @@ public class DBReplyTweets extends DataBase {
 				for (Status status : result.getTweets()) {
 
 					if (status.getInReplyToStatusId() == tweetId) {
-
-						writeDb(status.getText());
-						coments++;
+						
 						numBajados++;
+						coments++;
+						writeDb(status.getText());
+						if (numBajados==cantBajar){
+							LOGGER.info("Downloaded tweets: " + numBajados + ".");
+							return;
+						}				
+						
 					}
 
 				}
@@ -70,6 +77,9 @@ public class DBReplyTweets extends DataBase {
 				} else {
 					finish = true;
 				}
+				
+				if ((cantBajar!=0)&&(numBajados>=cantBajar)){finish=true;}
+					
 			}
 
 		}
