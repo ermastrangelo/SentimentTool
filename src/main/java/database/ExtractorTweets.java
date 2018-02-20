@@ -83,14 +83,16 @@ public class ExtractorTweets
 
 	
 	public String preProcesarTweet(String tweet) {
-		// si es retweet, si lo analizo quitar "RT"...sino descartar entero
-		// descargar tweets completos
 		// si en un tweet tengo al final "th" el remove ordinal no lo saca
 		// ME SIRVE PARA ARMAR LOS TrainingDirectories,le saco los hash tag
 		// tweetPreProcesado= extractor(tweetPreProcesado,"([#][\\w_-]+)" ,
 		// CaseSensitive.INSENSITIVE);
 
 		String tweetPreProcesado = tweet.replace("\n", " ").trim();
+		// remove "RT_"
+		if ((tweetPreProcesado.length()>=4)&&(tweetPreProcesado.substring(0, 3).equals("RT "))){
+			tweetPreProcesado=tweetPreProcesado.substring(3);
+		}
 
 		// Remove emojins
 		tweetPreProcesado = extraer(tweetPreProcesado,
