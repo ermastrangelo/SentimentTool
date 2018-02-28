@@ -6,6 +6,8 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
+
 export class AppComponent {
-  title = 'Ana sos grande';//esta en el html como doble llave {{}}string interpolation
+  
 }
