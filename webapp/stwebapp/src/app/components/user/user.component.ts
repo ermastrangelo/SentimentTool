@@ -18,17 +18,41 @@ export class UserComponent implements OnInit { //declaro todo esto como una clas
   address : Address;
   hobbies: string[];
   posts: Post[];
+
+  variablesGetUserTweets : ConjVar;
+
+  variablesGetReplies : ConjVar;
+
+  variablesGetHashtag : ConjVar;
+	
   	
 
   constructor(private dataService: DataService) { 
 	    
   	console.log("constructor: Running"); 
-  	
-  	
+
+  	this.variablesGetUserTweets={
+  		userName:' ',
+  		cantidadDescargar:0,
+  		tweetId:' ',	
+  	};
+  	this.variablesGetReplies={
+  		userName:' ',
+  		cantidadDescargar:0,
+  		tweetId:' ',	
+  	};
+  	this.variablesGetHashtag={
+  	  		userName:' ',
+  	  		cantidadDescargar:0,
+  	  		tweetId:' ',	
+  	  	};  	
   }
 
   ngOnInit() {
 	 console.log("OnInit: Running ");
+	 
+	  
+	 
     this.age=36;
   	this.name='Eric';
   	this.email= 'ericormnmastrangelo@gmail.com'
@@ -47,6 +71,18 @@ export class UserComponent implements OnInit { //declaro todo esto como una clas
   	 	 	
   	
   } 
+  
+  analizarUserTweets(){
+	  
+	  console.log("ANALIZAR USER TWEETS: "+this.variablesGetUserTweets.userName+this.variablesGetUserTweets.cantidadDescargar);
+	  
+  }
+  analizarReplies(){
+	  console.log("ANALIZAR REPLIES: "+this.variablesGetReplies.userName+this.variablesGetReplies.tweetId+this.variablesGetReplies.cantidadDescargar);
+  }
+  analizarHashtag(){
+	  console.log("ANALIZAR HASHTAG: "+this.variablesGetHashtag.userName+this.variablesGetHashtag.cantidadDescargar);
+  }
   
   onClick(){
 	  this.name="Roman";
@@ -68,12 +104,20 @@ export class UserComponent implements OnInit { //declaro todo esto como una clas
 
 }
 
+interface ConjVar{
+	userName:string;
+	cantidadDescargar:number;
+	tweetId:string;	
+}
+
+
 interface Post {
 	  id: number;
 	  title: string;
 	  body: string;
 	  userId: number;
 	}
+
 
 interface Address{
 	street: string;
