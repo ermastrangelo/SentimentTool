@@ -1,68 +1,64 @@
-<h1>Sentiment Tool</h1>
+<html>
+<h1>&nbsp; Sentiment Tool</h1>
 <h4>Bienvenidos a la primer aplicacion libre de analisis de sentimientos en Twitter</h4>
 <hr>
 <div>
 	<!-- Get user tweets-->
-	<h2 class="firstClass">Analizar tweets de un usuario:</h2>
+	<h2>&nbsp;Analizar tweets de un usuario:</h2>
 	<form>
 		<div>
-			<label for="nombreUsuario1">Nombre Usuario:</label><br> <input
+			<label class="label" for="nombreUsuario1">&nbsp; Nombre Usuario:</label><input 
 				type="text" [(ngModel)]="variablesGetUserTweets.userName" name="nombreUsuario1">
 		</div>
 		<div>
-			<label for="cant1">Cantidad a descargar:</label><br> <input
+			<label class="label" for="cant1">&nbsp;Cantidad a descargar:</label> <input
 				type="number" [(ngModel)]="variablesGetUserTweets.cantidadDescargar" name="cant1">
+				<button class="button"(click)="analizarUserTweets()">Analizar</button>
 		</div>
 	</form>
-	<br>
-	<button (click)="analizarUserTweets()">Analizar</button>
-
 </div>
 
 <hr width="75%">
 
 <div>
 	<!-- Get User Replies-->
-	<h2>Analizar respuestas a un tweet:</h2>
+	<h2>&nbsp;Analizar respuestas a un tweet:</h2>
 	<form>
 		<div>
-			<label for="nombreUsuario2">Nombre usuario:</label><br> <input
+			<label class="label" for="nombreUsuario2">&nbsp;Nombre usuario:</label><input
 				type="text" [(ngModel)]="variablesGetReplies.userName" name="nombreUsuario2">
 		</div>
 		<div>
-			<label for="idTweet1">Identificador del tweet:</label><br> <input
-				type="string" [(ngModel)]="variablesGetReplies.tweetId" name="idTweet1">
+			<label class="label" for="idTweet1">&nbsp;Identificador del tweet:</label><input
+				type="text" [(ngModel)]="variablesGetReplies.tweetId" name="idTweet1">
 		</div>
 		<div>
-			<label for="cant2">Cantidad a descargar:</label><br> <input
+			<label class="label" for="cant2">&nbsp;Cantidad a descargar:</label><input
 				type="number" [(ngModel)]="variablesGetReplies.cantidadDescargar" name="cant2">
+				<button class="button" (click)="analizarReplies()">Analizar</button>
 		</div>
 	</form>
-	<br>
-	<button (click)="analizarReplies()">Analizar</button>
-
 </div>
 
 <hr width="75%">
 
 <div>
 	<!-- Get Hashtag-->
-	<h2>Analizar tweets con cierto Hashtag:</h2>
+	<h2>&nbsp;Analizar tweets con cierto Hashtag:</h2>
 	<form>
 		<div>
-			<label for="nombreUsuario3">Hashtag:</label><br> <input
+			<label class="label" for="nombreUsuario3">&nbsp;Hashtag:</label><input
 				type="text" [(ngModel)]="variablesGetHashtag.userName" name="nombreUsuario3">
 		</div>
 		<div>
-			<label for="cant3">Cantidad a descargar:</label><br> <input
+			<label class="label" for="cant3">&nbsp;Cantidad a descargar:</label><input
 				type="number" [(ngModel)]="variablesGetHashtag.cantidadDescargar" name="cant3">
+				<button class="button" (click)="analizarHashtag()">Analizar</button>
 		</div>
 	</form>
-	<br>
-	<button (click)="analizarHashtag()">Analizar</button>
-
 </div>
-
+<br>
+</html>
 
 <!-- ul es una lista /// h1 es titulo H1,2,3,
 <ul>
