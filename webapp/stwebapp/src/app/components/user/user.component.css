@@ -27,16 +27,34 @@
   width: 245px;
 }
 
+.titlePanel{
+	position:absolute;
+    top: 9px;
+    left:9px;
+    right:0px;
+    bottom:0px;
+    
+	display: inline-block;
+	width: 900px;
+  	height:150px;
+/*   	background: #00e673; */
+	
+}
 h1 {
 	color: #ffffff;
 	font-family: 'Impact';
 	font-size: 55px;
 	font-weight: normal;
-	line-height: 60px;
-	margin: 0;
-	text-align: left;
+
+	text-align: left;	
 }
-h4 {
+h4 {    
+	position:absolute;
+    top:100px;
+    left:10px;
+    right:0px;
+    bottom:0px;
+    
 	color: #ffffff;
 	font-family: fantasy;
 	font-size: 25px;
@@ -56,9 +74,6 @@ h2 {
 	font-stretch: ultra-condensed;
 }
 
-.divTitle {
-    background-color:  #404040;
-}
 .div1 {
     background-color:  #ffffff;
 }
@@ -146,3 +161,23 @@ html {
  	background-color:   #404040;/*#ebebe0 */
 /* background: url("sent.jpeg") no-repeat center center fixed; */
 }
+
+.imageContainer{
+	
+  display: inline-block;
+  background: url("blueBird.png");/*  no-repeat center center fixed;*/
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  min-height: 100px;
+  margin-left: 1000px;
+  width: 150px;
+  height:150px;
+  min-height: 90px;
+
+}
+	
+	
+	
+	
+	

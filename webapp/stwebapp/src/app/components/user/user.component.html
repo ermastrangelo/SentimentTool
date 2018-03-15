@@ -1,12 +1,16 @@
 <html>
-<div class="divTitle">
-	<br>
+<br>
+<div class="titlePanel">
 	<h1>&nbsp; STL</h1>
-	<h4>&nbsp; Bienvenidos a la primer aplicacion <span style="color: #4169E1">libre</span> de analisis de
-		sentimientos en Twitter</h4>
-	 
-	<br>
+	<h4>
+		&nbsp; Bienvenidos a la primer aplicacion <span style="color: #4169E1">libre</span>
+		de analisis de sentimientos en Twitter
+	</h4>
 </div>
+<div class="imageContainer"></div>
+<br>
+
+
 <div class="div1">
 	<!-- Get user tweets-->
 	<br>
@@ -20,21 +24,20 @@
 			<label class="label" for="cant1">&nbsp;Cantidad a descargar:</label>
 			<input type="number"
 				[(ngModel)]="variablesGetUserTweets.cantidadDescargar" name="cant1">
-			<button class="button" title="Descarga la cantidad ingresada de tweets extraidos de la linea de timepo del usuario" (click)="analizarUserTweets()">Analizar</button>
+			<button class="button"
+				title="Descarga la cantidad ingresada de tweets extraidos de la linea de timepo del usuario"
+				(click)="analizarUserTweets()">Analizar</button>
 		</div>
-		
-		<div class="panel panel1 small"><span style="color: #4169E1">Titulo</span> 1dddddddddddddddddddddddd
-		ddddddddddddddddddddddddd
-		dddddddddddddddddddddddddddd
-		dddddddddddddddddddddddddddd
-		dddddddddddddddddddddddddddd
-		dddddddddddddddddddddddddddd
-		dddddddddddddddddddddddddddd
-		dddddddddddddddddddddddddddd
-		dddddddddddddddddddddddddddd
-		ddddddddddddddddddddddddddd</div>
-		<br>
-		<br>
+
+		<div class="panel panel1 small">
+			<span style="color: #4169E1">Titulo</span> 1dddddddddddddddddddddddd
+			ddddddddddddddddddddddddd dddddddddddddddddddddddddddd
+			dddddddddddddddddddddddddddd dddddddddddddddddddddddddddd
+			dddddddddddddddddddddddddddd dddddddddddddddddddddddddddd
+			dddddddddddddddddddddddddddd dddddddddddddddddddddddddddd
+			ddddddddddddddddddddddddddd
+		</div>
+		<br> <br>
 	</form>
 </div>
 
@@ -54,25 +57,21 @@
 
 			<label class="label" for="idTweet1">&nbsp;Identificador del
 				tweet:</label><input type="text" [(ngModel)]="variablesGetReplies.tweetId"
-				name="idTweet1">
-
-			<label class="label" for="cant2">&nbsp;Cantidad a descargar:</label><input
-				type="number" [(ngModel)]="variablesGetReplies.cantidadDescargar"
-				name="cant2">
+				name="idTweet1"> <label class="label" for="cant2">&nbsp;Cantidad
+				a descargar:</label><input type="number"
+				[(ngModel)]="variablesGetReplies.cantidadDescargar" name="cant2">
 			<button class="button" (click)="analizarReplies()">Analizar</button>
 		</div>
-		<div class="panel panel1 small"><span style="color: #4169E1">Titulo</span> 1dddddddddddddddddddddddddddddddd
-		dddddddddddddddddddddddddddddddddddd
-		dddddddddddddddddddddddddddd
-		dddddddddddddddddddddddddddd
-		dddddddddddddddddddddddddddd
-		dddddddddddddddddddddddddddd
-		dddddddddddddddddddddddddddd
-		dddddddddddddddddddddddddddd
-		dddddddddddddddddddddddddddd
-		dddddddddddddddddddddddddddddddddd</div>
-		<br>
-		<br>
+		<div class="panel panel1 small">
+			<span style="color: #4169E1">Titulo</span>
+			1dddddddddddddddddddddddddddddddd
+			dddddddddddddddddddddddddddddddddddd dddddddddddddddddddddddddddd
+			dddddddddddddddddddddddddddd dddddddddddddddddddddddddddd
+			dddddddddddddddddddddddddddd dddddddddddddddddddddddddddd
+			dddddddddddddddddddddddddddd dddddddddddddddddddddddddddd
+			dddddddddddddddddddddddddddddddddd
+		</div>
+		<br> <br>
 	</form>
 </div>
 
@@ -86,22 +85,21 @@
 		<div class="panel panel1">
 			<label class="label" for="nombreUsuario3">&nbsp;Hashtag:</label><input
 				type="text" [(ngModel)]="variablesGetHashtag.userName"
-				name="nombreUsuario3">
-
-			<label class="label" for="cant3">&nbsp;Cantidad a descargar:</label><input
-				type="number" [(ngModel)]="variablesGetHashtag.cantidadDescargar"
-				name="cant3">
+				name="nombreUsuario3"> <label class="label" for="cant3">&nbsp;Cantidad
+				a descargar:</label><input type="number"
+				[(ngModel)]="variablesGetHashtag.cantidadDescargar" name="cant3">
 			<button class="button" (click)="analizarHashtag()">Analizar</button>
 		</div>
-		<div class="panel panel1 small"><span style="color: #4169E1">Titulo</span> 1dddddddddddddddddddddddddddddddd
-		dddddddddddddddddddddddddddddddddddd
-		dddddddddddddddddddddddddddd
-		dddddddddddddddddddddddddddd
-		dddddddddddddddddddddddddddd
-		dddddddddddddddddddddddddddddddddd</div>
-		<br>
-		<br>
+		<div class="panel panel1 small">
+			<span style="color: #4169E1">Titulo</span>
+			1dddddddddddddddddddddddddddddddd
+			dddddddddddddddddddddddddddddddddddd dddddddddddddddddddddddddddd
+			dddddddddddddddddddddddddddd dddddddddddddddddddddddddddd
+			dddddddddddddddddddddddddddddddddd
+		</div>
+		<br> <br>
 	</form>
 </div>
 <br>
 </html>
+
