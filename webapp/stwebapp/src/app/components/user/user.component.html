@@ -1,126 +1,107 @@
 <html>
-<h1>&nbsp; Sentiment Tool</h1>
-<h4>Bienvenidos a la primer aplicacion libre de analisis de sentimientos en Twitter</h4>
-<hr>
-<div>
+<div class="divTitle">
+	<br>
+	<h1>&nbsp; STL</h1>
+	<h4>&nbsp; Bienvenidos a la primer aplicacion <span style="color: #4169E1">libre</span> de analisis de
+		sentimientos en Twitter</h4>
+	 
+	<br>
+</div>
+<div class="div1">
 	<!-- Get user tweets-->
+	<br>
 	<h2>&nbsp;Analizar tweets de un usuario:</h2>
 	<form>
-		<div>
-			<label class="label" for="nombreUsuario1">&nbsp; Nombre Usuario:</label><input 
-				type="text" [(ngModel)]="variablesGetUserTweets.userName" name="nombreUsuario1">
+		<div class="panel panel1">
+			<label class="label" for="nombreUsuario1">&nbsp; Nombre
+				Usuario:</label><input type="text"
+				[(ngModel)]="variablesGetUserTweets.userName" name="nombreUsuario1">
+
+			<label class="label" for="cant1">&nbsp;Cantidad a descargar:</label>
+			<input type="number"
+				[(ngModel)]="variablesGetUserTweets.cantidadDescargar" name="cant1">
+			<button class="button" title="Descarga la cantidad ingresada de tweets extraidos de la linea de timepo del usuario" (click)="analizarUserTweets()">Analizar</button>
 		</div>
-		<div>
-			<label class="label" for="cant1">&nbsp;Cantidad a descargar:</label> <input
-				type="number" [(ngModel)]="variablesGetUserTweets.cantidadDescargar" name="cant1">
-				<button class="button"(click)="analizarUserTweets()">Analizar</button>
-		</div>
+		
+		<div class="panel panel1 small"><span style="color: #4169E1">Titulo</span> 1dddddddddddddddddddddddd
+		ddddddddddddddddddddddddd
+		dddddddddddddddddddddddddddd
+		dddddddddddddddddddddddddddd
+		dddddddddddddddddddddddddddd
+		dddddddddddddddddddddddddddd
+		dddddddddddddddddddddddddddd
+		dddddddddddddddddddddddddddd
+		dddddddddddddddddddddddddddd
+		ddddddddddddddddddddddddddd</div>
+		<br>
+		<br>
 	</form>
 </div>
 
-<hr width="75%">
+<hr width="100%">
 
-<div>
+<div class="div2">
 	<!-- Get User Replies-->
-	<h2>&nbsp;Analizar respuestas a un tweet:</h2>
+	<br>
+	<h2>
+		<span>&nbsp;Analizar respuestas a un tweet:</span>
+	</h2>
 	<form>
-		<div>
-			<label class="label" for="nombreUsuario2">&nbsp;Nombre usuario:</label><input
-				type="text" [(ngModel)]="variablesGetReplies.userName" name="nombreUsuario2">
-		</div>
-		<div>
-			<label class="label" for="idTweet1">&nbsp;Identificador del tweet:</label><input
-				type="text" [(ngModel)]="variablesGetReplies.tweetId" name="idTweet1">
-		</div>
-		<div>
+		<div class="panel panel1">
+			<label class="label" for="nombreUsuario2">&nbsp;Nombre
+				usuario:</label><input type="text"
+				[(ngModel)]="variablesGetReplies.userName" name="nombreUsuario2">
+
+			<label class="label" for="idTweet1">&nbsp;Identificador del
+				tweet:</label><input type="text" [(ngModel)]="variablesGetReplies.tweetId"
+				name="idTweet1">
+
 			<label class="label" for="cant2">&nbsp;Cantidad a descargar:</label><input
-				type="number" [(ngModel)]="variablesGetReplies.cantidadDescargar" name="cant2">
-				<button class="button" (click)="analizarReplies()">Analizar</button>
+				type="number" [(ngModel)]="variablesGetReplies.cantidadDescargar"
+				name="cant2">
+			<button class="button" (click)="analizarReplies()">Analizar</button>
 		</div>
+		<div class="panel panel1 small"><span style="color: #4169E1">Titulo</span> 1dddddddddddddddddddddddddddddddd
+		dddddddddddddddddddddddddddddddddddd
+		dddddddddddddddddddddddddddd
+		dddddddddddddddddddddddddddd
+		dddddddddddddddddddddddddddd
+		dddddddddddddddddddddddddddd
+		dddddddddddddddddddddddddddd
+		dddddddddddddddddddddddddddd
+		dddddddddddddddddddddddddddd
+		dddddddddddddddddddddddddddddddddd</div>
+		<br>
+		<br>
 	</form>
 </div>
 
-<hr width="75%">
+<hr width="100%">
 
-<div>
+<div class="div3">
 	<!-- Get Hashtag-->
+	<br>
 	<h2>&nbsp;Analizar tweets con cierto Hashtag:</h2>
 	<form>
-		<div>
+		<div class="panel panel1">
 			<label class="label" for="nombreUsuario3">&nbsp;Hashtag:</label><input
-				type="text" [(ngModel)]="variablesGetHashtag.userName" name="nombreUsuario3">
-		</div>
-		<div>
+				type="text" [(ngModel)]="variablesGetHashtag.userName"
+				name="nombreUsuario3">
+
 			<label class="label" for="cant3">&nbsp;Cantidad a descargar:</label><input
-				type="number" [(ngModel)]="variablesGetHashtag.cantidadDescargar" name="cant3">
-				<button class="button" (click)="analizarHashtag()">Analizar</button>
+				type="number" [(ngModel)]="variablesGetHashtag.cantidadDescargar"
+				name="cant3">
+			<button class="button" (click)="analizarHashtag()">Analizar</button>
 		</div>
+		<div class="panel panel1 small"><span style="color: #4169E1">Titulo</span> 1dddddddddddddddddddddddddddddddd
+		dddddddddddddddddddddddddddddddddddd
+		dddddddddddddddddddddddddddd
+		dddddddddddddddddddddddddddd
+		dddddddddddddddddddddddddddd
+		dddddddddddddddddddddddddddddddddd</div>
+		<br>
+		<br>
 	</form>
 </div>
 <br>
 </html>
-
-<!-- ul es una lista /// h1 es titulo H1,2,3,
-<ul>
-	<li>NAME:{{name}}</li>
-	<li>EMAIL:{{email}}</li>
-	<li>AGE: {{age}}</li>
-	<li>ADDRESS {{address.street}}{{address.city}}</li>
-	<li>{{address.state}}</li>
-</ul>
-
-
-<button (click)="onClick()">Click me</button>
-
-<h1>Edit User</h1>
-<form>
-	<div>
-		<label for="name1">Name:</label><br>
-		<input type="text" [(ngModel)]="name" name="name1">
-	</div>
-	<div>
-		<label for="email1">Email:</label><br>
-		<input type="text" [(ngModel)]="email" name="email1">
-	</div>
-	<div>
-		<label for="age1">Age:</label><br>
-		<input type="number" [(ngModel)]="age" name="age1">
-	</div>
-	<div>
-		<label for="street1">Address:</label><br>
-		<input type="text" [(ngModel)]="address.street" name="street1">
-	</div>
-	<div>
-		<label for="city1">Address:</label><br>
-		<input type="text" [(ngModel)]="address.city" name="city1">
-	</div>
-	<div>
-		<label for="state1">Address:</label><br>
-		<input type="text" [(ngModel)]="address.state" name="state1">
-	</div>
-</form>
-
-<h1>Hobbies</h1>
-<form (submit)="addHobby(hobby.value)">
-	<div>
-		<label for="hobby">Hobby</label> <input type="text" #hobby>
-	</div>
-</form>
-
-
-
-
-<ul>
-  <li *ngFor="let hobby of hobbies; let i = index">
-  {{i+1}} {{hobby}} <button (click)="deleteHobby(hobby)">X</button></li>
-</ul>
-
-<h1>Posts</h1>
-<div *ngFor="let post of posts">
-<h4>{{post.title}}</h4>
-<p>{{post.body}}</p>
-</div>
-
--->
-
-
