@@ -76,7 +76,10 @@ public class DBHashTag extends DataBase {
 		}
 
 		for (Status t : tweets) {
-			writeDb(t.getText());
+			if (t.getLang().equals("en")) {//solo idioma ingles
+				writeDb(t.getText());
+			}
+			
 		}
 
 		LOGGER.info("Downloaded tweets: " + tweets.size() + ".");

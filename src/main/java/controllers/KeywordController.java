@@ -26,6 +26,7 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,11 +37,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RestController
 public class KeywordController {
 	
+	
 	private static final Logger LOGGER = LoggerFactory.getLogger(KeywordController.class);
 	
+	@CrossOrigin(origins = "http://localhost:4200") 
 	@RequestMapping("/keywords")
 	@ResponseBody
-	public HttpServletResponse getKeywords(@RequestParam Map<String, String> requestParams, HttpServletResponse response) {
+	//HttpServletResponse
+	public String getKeywords(@RequestParam Map<String, String> requestParams, HttpServletResponse response) {
 		
 		LOGGER.info(" -------------BEGIN KEYWORD CONTROLLER--------------");
 
@@ -75,32 +79,37 @@ public class KeywordController {
 		
 		//SACAR
 
-		//File file = new File("C:\\Users\\Eric\\Desktop\\DATA_QLIK_SENTIMENT_TOOL\\ExampleTweets_1.csv");
+		//File file = new File("ExampleTweets_1.csv");
 		
-		Path path = Paths.get("ExampleTweets_1");
-		byte[] data=null;
-		try {
-			data = Files.readAllBytes(path);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-        try {
-			IOUtils.copy(new ByteArrayInputStream(data), response.getOutputStream());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        response.setHeader("Content-Disposition", "attachment;filename=ExampleTweets_1.csv");
-     
-        return response;
+//		Path path = Paths.get("ExampleTweets_1");
+//		byte[] data = null;
+//		try {
+//			data = Files.readAllBytes(path);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		try {
+//			IOUtils.copy(new ByteArrayInputStream(data), response.getOutputStream());
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		response.setHeader("Content-Disposition", "attachment;filename=ExampleTweets_1.csv");
+
+        //return response;
 		//.................
 		
 		
 		//return file.getAbsoluteFile();
-		//return "Hola Ing. Mastrángelo: getKeywords finalizo exitosamente Feriado";
-
+		//return "Hola Ing. ERomanM: getKeywords finalizo exitosamente Llamada por Front End";
+		return "{ key1: 'value1', key2: 'value2' }";
+//		return "TEXT	RETWEETS	COMMENTS	SENTIMENT	DATE	LOCATION	CITY	LIKES	USR	GENDER\r\n" + 
+//				"Happy for the chrismas gifts	0	0	Positive	01/01/2018	ARG	ROSARIO	21	Eli	F\r\n" + 
+//				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	M\r\n" + 
+//				"";
+		
 	}
 
 }
