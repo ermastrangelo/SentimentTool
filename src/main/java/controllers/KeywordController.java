@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 //LLAMAR A QLIK DIRECTAMENTE??
-//http://localhost:8080/keywords?keyword=mambo&algorithm=2&cantBajar=500
+//http://localhost:8080/keywords?id=121143434&user=mambo&cantBajar=500
 
 @RestController
 public class KeywordController {
@@ -42,14 +42,16 @@ public class KeywordController {
 	
 	@CrossOrigin(origins = "http://localhost:4200") 
 	@RequestMapping("/keywords")
-	@ResponseBody
+	//@ResponseBody------------->>>Sacar?
 	//HttpServletResponse
 	public String getKeywords(@RequestParam Map<String, String> requestParams, HttpServletResponse response) {
 		
 		LOGGER.info(" -------------BEGIN KEYWORD CONTROLLER--------------");
 
-		String keyword = requestParams.get("keyword");
-		String algorithm = requestParams.get("algorithm");
+		String id = requestParams.get("id");
+		String user = requestParams.get("user");//equivale al keyword
+		//String algorithm = requestParams.get("algorithm"); HARCODIE ALGORITMO 2
+		String algorithm = "2";
 		String cantBajarString = requestParams.get("cantBajar");
 		int cantBajar = Integer.parseInt(cantBajarString);
 
@@ -65,8 +67,8 @@ public class KeywordController {
 
 		DataBase db;
 		db = new DBHashTag();
-		LOGGER.info("Starting to get tweets with keyword: "+keyword+".");
-		db.getTweets(keyword,cantBajar);
+		LOGGER.info("Starting to get tweets with keyword: "+user+".");
+		db.getTweets(user,cantBajar);
 		db.closeFile();
 		
 		
@@ -104,11 +106,13 @@ public class KeywordController {
 		
 		//return file.getAbsoluteFile();
 		//return "Hola Ing. ERomanM: getKeywords finalizo exitosamente Llamada por Front End";
-		return "{ key1: 'value1', key2: 'value2' }";
-//		return "TEXT	RETWEETS	COMMENTS	SENTIMENT	DATE	LOCATION	CITY	LIKES	USR	GENDER\r\n" + 
-//				"Happy for the chrismas gifts	0	0	Positive	01/01/2018	ARG	ROSARIO	21	Eli	F\r\n" + 
-//				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	M\r\n" + 
-//				"";
+		//return "{ key1: 'value1', key2: 'value2' }";
+		return "TEXT	RETWEETS	COMMENTS	SENTIMENT	DATE	LOCATION	CITY	LIKES	USR	GENDER\r\n" + 
+				"Happy for all3 the chrismas gifts	0	0	Positive	01/01/2018	ARG	ROSARIO	21	Eli	F\r\n" + 
+				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	F\r\n" + 
+				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	F\r\n" + 
+				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	F\r\n" + 
+				"";
 		
 	}
 
