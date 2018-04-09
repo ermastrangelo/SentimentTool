@@ -54,7 +54,7 @@ public class ClasificadorDeSentimientos {
 		String fileName = "TweetsDB";
 		int sentimiento = -1;
 
-		// solo toma una linea, la envia a clasificar y guarda el resultado
+		//solo toma una linea, la envia a clasificar y guarda el resultado
 		try {
 			br = new BufferedReader(new FileReader(fileName));
 
