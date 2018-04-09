@@ -18,6 +18,7 @@ export class UserComponent implements OnInit { //declaro todo esto como una clas
   address : Address;
   hobbies: string[];
   posts: Post[];
+  engine: Engine;
 
   variablesGetUserTweets : ConjVar;
 
@@ -64,11 +65,15 @@ export class UserComponent implements OnInit { //declaro todo esto como una clas
   	this.hobbies=['dance', 'eat', 'codean'];
   	
   	//me suscribo al servicio (observanle), y le pido que me meta en posts el resultado
-  	this.dataService.getPost().subscribe((posts) =>   {console.log(posts);
-  														this.posts=posts; 
-  														} );
+//  	this.dataService.getPost().subscribe((posts) =>   {console.log(posts);
+//  														this.posts=posts; 
+//  														} );
   	
-  	 	 	
+//  	this.dataService.getPost().subscribe((engine) =>   {console.log(engine);
+//														this.engine=engine; 
+//														} );
+  	
+
   	
   } 
   
@@ -81,8 +86,22 @@ export class UserComponent implements OnInit { //declaro todo esto como una clas
 	  console.log("ANALIZAR REPLIES: "+this.variablesGetReplies.userName+this.variablesGetReplies.tweetId+this.variablesGetReplies.cantidadDescargar);
   }
   analizarHashtag(){
+	  
 	  console.log("ANALIZAR HASHTAG: "+this.variablesGetHashtag.userName+this.variablesGetHashtag.cantidadDescargar);
+	  
+	  this.dataService.getBackEnd('keywords',this.variablesGetHashtag.userName,'000000000',this.variablesGetHashtag.cantidadDescargar).subscribe((engine) =>   {console.log(engine);
+																																								this.engine=engine; 
+																																								} );
   }
+  
+//  analizarRestCall(){
+//	  //pasar action,user, id, cantBajar
+//	  
+//	  this.dataService.getPost('keywords',this.variablesGetHashtag.userName,'000000000',this.variablesGetHashtag.cantidadDescargar).subscribe((engine) =>   {console.log("salida eric: "+engine);
+//		this.engine=engine; 
+//		} );
+//	  
+//  }
   
   onClick(){
 	  this.name="Roman";
@@ -110,6 +129,10 @@ interface ConjVar{
 	tweetId:string;	
 }
 
+interface Engine {
+	result: number;
+
+}
 
 interface Post {
 	  id: number;

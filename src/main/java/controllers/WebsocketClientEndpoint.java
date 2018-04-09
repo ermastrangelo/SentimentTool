@@ -11,13 +11,14 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 
-/**
- * ChatServer Client
- *
- * @author Jiji_Sasidharan
- */
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 @ClientEndpoint
 public class WebsocketClientEndpoint {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(WebsocketClientEndpoint.class);
 
     Session userSession = null;
     private MessageHandler messageHandler;
@@ -38,7 +39,7 @@ public class WebsocketClientEndpoint {
      */
     @OnOpen
     public void onOpen(Session userSession) {
-        System.out.println("opening websocket");
+    	LOGGER.info("opening websocket");
         this.userSession = userSession;
     }
 
@@ -50,7 +51,7 @@ public class WebsocketClientEndpoint {
      */
     @OnClose
     public void onClose(Session userSession, CloseReason reason) {
-        System.out.println("closing websocket");
+    	LOGGER.info("closing websocket");
         this.userSession = null;
     }
 

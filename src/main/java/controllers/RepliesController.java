@@ -14,6 +14,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class RepliesController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(RepliesController.class);
-
+	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping("/replies")
 	public String getReplies(@RequestParam Map<String, String> requestParams) {
 

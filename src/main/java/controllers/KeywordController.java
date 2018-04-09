@@ -47,7 +47,9 @@ public class KeywordController {
 	public String getKeywords(@RequestParam Map<String, String> requestParams, HttpServletResponse response) {
 		
 		LOGGER.info(" -------------BEGIN KEYWORD CONTROLLER--------------");
-
+		
+		System.out.println("ENTRO BACK END");
+		
 		String id = requestParams.get("id");
 		String user = requestParams.get("user");//equivale al keyword
 		//String algorithm = requestParams.get("algorithm"); HARCODIE ALGORITMO 2
@@ -109,9 +111,9 @@ public class KeywordController {
 		//return "{ key1: 'value1', key2: 'value2' }";
 		return "TEXT	RETWEETS	COMMENTS	SENTIMENT	DATE	LOCATION	CITY	LIKES	USR	GENDER\r\n" + 
 				"Happy for all3 the chrismas gifts	0	0	Positive	01/01/2018	ARG	ROSARIO	21	Eli	F\r\n" + 
-				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	F\r\n" + 
-				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	F\r\n" + 
-				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	F\r\n" + 
+				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	M\r\n" + 
+				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	M\r\n" + 
+				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	M\r\n" + 
 				"";
 		
 	}
