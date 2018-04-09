@@ -57,6 +57,7 @@ public class KeywordController {
 		String cantBajarString = requestParams.get("cantBajar");
 		int cantBajar = Integer.parseInt(cantBajarString);
 
+		// instancio algorìtmos
 		AlgoritmosClasificacion algo = null;
 		if (algorithm.equals("1")) {
 			algo = new AlgorithmStanfordCoreNLP();
@@ -66,17 +67,20 @@ public class KeywordController {
 			LOGGER.info("Algorithm LingPipe created.");
 			
 		}
+		
+		//instancio clasificador con el algoritmo
+		ClasificadorDeSentimientos cl = new ClasificadorDeSentimientos(algo);
+//		cl.clasificarTweets();
 
 		DataBase db;
-		db = new DBHashTag();
+		db = new DBHashTag(cl);
 		LOGGER.info("Starting to get tweets with keyword: "+user+".");
 		db.getTweets(user,cantBajar);
 		db.closeFile();
 		
 		
 		LOGGER.info("Starting to clasify tweets.");		
-		ClasificadorDeSentimientos cl = new ClasificadorDeSentimientos(algo);
-		cl.clasificarTweets();
+		
 		LOGGER.info("Finish Clasification");
 		LOGGER.info(" -------------END KEYWORD CONTROLLER--------------");
 		

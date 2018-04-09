@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import controllers.KeywordController;
+import analizer.ClasificadorDeSentimientos;
 import twitter4j.Query;
 import twitter4j.QueryResult;
 import twitter4j.Status;
@@ -17,8 +18,8 @@ public class DBHashTag extends DataBase {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DBHashTag.class);
 
-	public DBHashTag() {
-		super();
+	public DBHashTag(ClasificadorDeSentimientos cl) {
+		super(cl);
 	}
 
 	@Override

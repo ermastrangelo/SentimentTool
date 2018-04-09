@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import algorithms.AlgoritmosClasificacion;
+import analizer.ClasificadorDeSentimientos;
 
 public abstract class DataBase {
 	
@@ -17,8 +18,9 @@ public abstract class DataBase {
 	BufferedWriter bw = null;
 	FileWriter fw = null;
 	ExtractorTweets extractorT=new ExtractorTweets();
+	ClasificadorDeSentimientos clasificador;
 
-	public DataBase() {
+	public DataBase(ClasificadorDeSentimientos cl) {
 		// constructor solo crea e inicializa el archivo
 		try {
 			fw = new FileWriter("TweetsDB");
@@ -27,6 +29,7 @@ public abstract class DataBase {
 		} catch (IOException e) {
 			LOGGER.error("Creating TweetsDB : " + e.getMessage());
 		}
+		clasificador=cl;
 	}
 
 	public void writeDb(String tweet) {
