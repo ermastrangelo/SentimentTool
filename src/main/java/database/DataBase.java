@@ -1,5 +1,8 @@
 package database;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.regex.Matcher;
@@ -23,7 +26,7 @@ public abstract class DataBase {
 	public DataBase(ClasificadorDeSentimientos cl) {
 		// constructor solo crea e inicializa el archivo
 		try {
-			fw = new FileWriter("TweetsDB");
+			fw = new FileWriter("TweetsDB.csv");
 			bw = new BufferedWriter(fw);
 
 		} catch (IOException e) {
@@ -32,15 +35,42 @@ public abstract class DataBase {
 		clasificador=cl;
 	}
 
-	public void writeDb(String tweet) {
-		// preprocesa y guarda en la base de datos el tweet dado
+	public String returnForQlik() {
 
-		String tweetPreprocesado = extractorT.preProcesarTweet(tweet);
-		
+		String lineaFinal = "";
+
 		try {
-			if (tweetPreprocesado.length() > 1){
-				bw.write(tweetPreprocesado + "\n");// bw.write(tweetPreprocesado+"
-			}	// ");
+			BufferedReader nuevoBuffer = new BufferedReader(new FileReader("TweetsDB.csv"));
+
+			String line = nuevoBuffer.readLine();
+
+			while (line != null) {
+
+				lineaFinal += line+"\n";
+				line = nuevoBuffer.readLine();
+
+			}
+
+			nuevoBuffer.close();
+
+		} catch (FileNotFoundException e) {
+			LOGGER.error("Opening TweetsDB.csv for read 1: " + e.getMessage());
+		} catch (IOException e) {
+			LOGGER.error("Opening TweetsDB.csv for read 1: " + e.getMessage());
+		}
+		return lineaFinal;
+
+	}
+	
+	
+	public void writeDb(String tweet) {
+		//guarda en la base de datos el tweet dado
+
+		try {
+			if((tweet!=null)&(tweet.length() > 1)){
+				//bw.write(tweet+ "\n");
+				bw.write(tweet);
+			}
 		} catch (IOException e) {
 			LOGGER.error("Writing line: " + e.getMessage());
 		}

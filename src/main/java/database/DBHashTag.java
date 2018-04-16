@@ -21,6 +21,37 @@ public class DBHashTag extends DataBase {
 	public DBHashTag(ClasificadorDeSentimientos cl) {
 		super(cl);
 	}
+	
+	private String armarLineaCSV(Status status) {
+		String line="";
+		String tweetLimpio=""; 
+		
+		tweetLimpio=extractorT.preProcesarTweet(status.getText());
+		
+		line+=tweetLimpio+"	";//text
+
+		line+=status.getRetweetCount()+"	";//retweets		
+		line+=clasificador.clasificarTweets(tweetLimpio)+"	";//sentiment
+		
+		line+=status.getCreatedAt().getMonth()+"	";//date
+		
+//		line+=status.getGeoLocation()+"	";//latitud longitud
+		
+		line+=status.getUser().getScreenName()+"	";//name
+
+//		if (status.getPlace()!=null) {
+//			line+=status.getPlace().getCountry()+"	";//place donde twiteo
+//		}else { line+="-	";}
+		
+		if (status.getUser()!=null) {
+			line+=status.getUser().getLocation()+"	";//user location
+		}else { line+="-	";}
+
+		line+=status.getUser().getTimeZone()+ " \n";//user timezone
+
+		
+		return line;
+	}
 
 	@Override
 	public void getTweets(String hashTag, int cantBajar) {
@@ -75,10 +106,16 @@ public class DBHashTag extends DataBase {
 
 			query.setMaxId(lastID - 1);
 		}
+		
+		//tratar de poner encabezado
+		//writeDb("TEXT	RETWEETS	SENTIMENT	DATE	LOCATION	USER	PLACE	TIMEZONE\r\n");
 
+		//por cada tweet recibido armo la linea que quiero almacenar
 		for (Status t : tweets) {
 			if (t.getLang().equals("en")) {//solo idioma ingles
-				writeDb(t.getText());
+				
+				writeDb(armarLineaCSV(t));
+				//writeDb(t.getText());
 			}
 			
 		}
