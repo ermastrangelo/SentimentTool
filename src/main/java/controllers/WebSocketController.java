@@ -43,7 +43,7 @@ public class WebSocketController {
 		try {
 			// open websocket
 			final WebsocketClientEndpoint clientEndPoint = new WebsocketClientEndpoint(
-					new URI("ws://localhost:4848/app/test.qvf"));
+					new URI("ws://localhost:4848/app/TesisApp.qvf"));
 
 			// add listener
 			clientEndPoint.addMessageHandler(new WebsocketClientEndpoint.MessageHandler() {
@@ -56,16 +56,16 @@ public class WebSocketController {
 			// wait 5 seconds for messages from websocket
 			Thread.sleep(5000);
 
-			// Open test.qvf app
+			// Open TesisApp.qvf
 			LOGGER.info("Starting Open Qlik engine api session");
-			newMessage = "{\"jsonrpc\": \"2.0\",\"id\": 2,\"method\": \"OpenDoc\",\"handle\": -1,\"params\": [ \"C:\\\\Users\\\\Eric\\\\Documents\\\\Qlik\\\\Sense\\\\Apps\\\\test.qvf\" ]}";
+			newMessage = "{\"jsonrpc\": \"2.0\",\"id\": 2,\"method\": \"OpenDoc\",\"handle\": -1,\"params\": [ \"C:\\\\Users\\\\Eric\\\\Documents\\\\Qlik\\\\Sense\\\\Apps\\\\TesisApp.qvf\" ]}";
 			clientEndPoint.sendMessage(newMessage);
 
 			Thread.sleep(5000);
 
 			// modify Rest connection with parameters
 			LOGGER.info("Starting to modify the Qlik app rest connection");
-			newMessage = "{\"jsonrpc\": \"2.0\",\"id\": 10, \"method\": \"ModifyConnection\", \"handle\": 1, \"params\": [\"783c6ea1-94f2-4443-8abf-bb6eeae15fcc\", {\"qName\": \"restConnection\", \"qConnectionString\":\"CUSTOM CONNECT TO \\\"provider=QvRestConnector.exe;url=http://localhost:8080/"
+			newMessage = "{\"jsonrpc\": \"2.0\",\"id\": 10, \"method\": \"ModifyConnection\", \"handle\": 1, \"params\": [\"7b5d4372-3431-47b2-a60d-48d9fa719223\", {\"qName\": \"RestBackend\", \"qConnectionString\":\"CUSTOM CONNECT TO \\\"provider=QvRestConnector.exe;url=http://localhost:8080/"
 					+ action
 					+ ";timeout=30;method=GET;autoDetectResponseType=true;keyGenerationStrategy=0;authSchema=anonymous;skipServerCertificateValidation=false;useCertificate=No;certificateStoreLocation=CurrentUser;certificateStoreName=My;queryParameters=id%2"
 					+ tweetId + "%1user%2" + user + "%1cantBajar%2" + cantBajar
@@ -73,6 +73,7 @@ public class WebSocketController {
 			clientEndPoint.sendMessage(newMessage);
 
 			Thread.sleep(5000);
+			Thread.sleep(15000);//se va a descargar los tweets
 			
 			// do Reload
 			LOGGER.info("Starting to reload Qlik app");
@@ -98,7 +99,7 @@ public class WebSocketController {
 
 		LOGGER.info(" -------------END WEB SOCKET CONTROLLER--------------");
 
-		return "{ result: 1.2 }";
+		return "{ result: 1.3 }";
 
 	}
 
