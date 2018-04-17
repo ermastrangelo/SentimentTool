@@ -22,36 +22,6 @@ public class DBHashTag extends DataBase {
 		super(cl);
 	}
 	
-	private String armarLineaCSV(Status status) {
-		String line="";
-		String tweetLimpio=""; 
-		
-		tweetLimpio=extractorT.preProcesarTweet(status.getText());
-		
-		line+=tweetLimpio+"	";//text
-
-		line+=status.getRetweetCount()+"	";//retweets		
-		line+=clasificador.clasificarTweets(tweetLimpio)+"	";//sentiment
-		
-		line+=status.getCreatedAt().getMonth()+"	";//date
-		
-//		line+=status.getGeoLocation()+"	";//latitud longitud
-		
-		line+=status.getUser().getScreenName()+"	";//name
-
-//		if (status.getPlace()!=null) {
-//			line+=status.getPlace().getCountry()+"	";//place donde twiteo
-//		}else { line+="-	";}
-		
-		if (status.getUser()!=null) {
-			line+=status.getUser().getLocation()+"	";//user location
-		}else { line+="-	";}
-
-		line+=status.getUser().getTimeZone()+ " \n";//user timezone
-
-		
-		return line;
-	}
 
 	@Override
 	public void getTweets(String hashTag, int cantBajar) {
@@ -68,7 +38,7 @@ public class DBHashTag extends DataBase {
 		// ó porq una persona publica lo mismo identico
 
 		if (cantBajar == 0) {
-			cantBajar = 500;
+			cantBajar = 100;
 		}
 
 		Twitter twitter = new TwitterFactory().getInstance();
@@ -111,11 +81,14 @@ public class DBHashTag extends DataBase {
 		//writeDb("TEXT	RETWEETS	SENTIMENT	DATE	LOCATION	USER	PLACE	TIMEZONE\r\n");
 
 		//por cada tweet recibido armo la linea que quiero almacenar
+		String line="";
 		for (Status t : tweets) {
 			if (t.getLang().equals("en")) {//solo idioma ingles
 				
-				writeDb(armarLineaCSV(t));
-				//writeDb(t.getText());
+				line=armarLineaCSV(t);
+				if(line.length()>2) {
+					writeDb(line);
+				}
 			}
 			
 		}

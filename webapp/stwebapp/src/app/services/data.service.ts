@@ -32,27 +32,17 @@ export class DataService {
 	  
 	  //llamada al back end
 	  //console.log("LLAMAAA	"+action+user+id+cantBajar);
-	  //return this.http.get('http://http://localhost:8080/websocket?action='+action+'&user='+user+'&tweetId='+id+'&cantBajar='+cantBajar,httpOptions).map(res => res.json());
-	  
-	  //eengine
-	  //return this.http.get('http://localhost:4848/app/?transient=?reloadUri=http://localhost:4848/dev-hub/engine-api-explorer',httpOptions).map(res => res.json());
-	  
-	  //return this.http.get('http://localhost:8080/keywords?keyword=mambo&algorithm=2&cantBajar=500',httpOptions).map(res => res.json()); 
+	  //return this.http.get('http://http://localhost:8080/websocket?action='+action+'&user='+user+'&tweetId='+id+'&cantBajar='+cantBajar,httpOptions).map(res => res.json()); 
 	  
   }
   
  getBackEnd(action,user, id, cantBajar ) {
  
-  console.log("entroooo");
+  console.log("Llamo a web socket controller");
   
   return this.http.get('http://localhost:8080/websocket?action='+action+'&user='+user+'&tweetId='+id+'&cantBajar='+cantBajar).map(res => res.json());//.catch(this.handleError);
 }
-  
-  
-//  getEngineConect(){ 
-  
-//     return this.http.get('http://localhost:4848/app/?transient=?reloadUri=http://localhost:4848/dev-hub/engine-api-explorer',httpOptions).map(res => res.json());  
-//  }
+
   
   
 

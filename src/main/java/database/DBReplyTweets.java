@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import analizer.ClasificadorDeSentimientos;
 import controllers.UserTweetsController;
 import twitter4j.Query;
 import twitter4j.QueryResult;
@@ -19,8 +20,8 @@ public class DBReplyTweets extends DataBase {
 
 	long tweetId;
 
-	public DBReplyTweets(String tID) {
-		super();
+	public DBReplyTweets(ClasificadorDeSentimientos cl,String tID) {
+		super(cl);
 		tweetId = Long.parseLong(tID, 10);
 	}
 
@@ -53,7 +54,7 @@ public class DBReplyTweets extends DataBase {
 			}
 
 			coments = 0;
-
+			String line="";
 			if (result != null) {
 
 				for (Status status : result.getTweets()) {
@@ -62,7 +63,12 @@ public class DBReplyTweets extends DataBase {
 
 						numBajados++;
 						coments++;
-						writeDb(status.getText());
+						
+						line=armarLineaCSV(status);
+						if(line.length()>2) {
+							writeDb(line);
+						}
+						
 						if (numBajados == cantBajar) {
 							LOGGER.info("Downloaded tweets: " + numBajados + ".");
 							return;

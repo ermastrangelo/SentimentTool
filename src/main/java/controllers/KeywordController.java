@@ -8,6 +8,7 @@ import algorithms.AlgoritmosClasificacion;
 import analizer.ClasificadorDeSentimientos;
 import database.DBHashTag;
 import database.DataBase;
+import database.ExtractorTweets;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -42,13 +43,10 @@ public class KeywordController {
 	
 	@CrossOrigin(origins = "http://localhost:4200") 
 	@RequestMapping("/keywords")
-	//@ResponseBody------------->>>Sacar?
-	//HttpServletResponse
-	public String getKeywords(@RequestParam Map<String, String> requestParams, HttpServletResponse response) {
+
+	public String getKeywords(@RequestParam Map<String, String> requestParams, HttpServletResponse response) {//probar de sacar response
 		
 		LOGGER.info(" -------------BEGIN KEYWORD CONTROLLER--------------");
-		
-		System.out.println("ENTRO BACK END");
 		
 		String id = requestParams.get("id");
 		String user = requestParams.get("user");//equivale al keyword
@@ -57,68 +55,48 @@ public class KeywordController {
 		String cantBajarString = requestParams.get("cantBajar");
 		int cantBajar = Integer.parseInt(cantBajarString);
 
-		// instancio algorìtmos
+		// instancio algoritmos
 		AlgoritmosClasificacion algo = null;
 		if (algorithm.equals("1")) {
 			algo = new AlgorithmStanfordCoreNLP();
 			LOGGER.info("Algorithm StanfordCoreNLP created.");
 		} else {
 			algo = new AlgorithmLingPipe();
-			LOGGER.info("Algorithm LingPipe created.");
-			
+			LOGGER.info("Algorithm LingPipe created.");	
 		}
 		
 		//instancio clasificador con el algoritmo
 		ClasificadorDeSentimientos cl = new ClasificadorDeSentimientos(algo);
-//		cl.clasificarTweets();
 
 		DataBase db;
 		db = new DBHashTag(cl);
-		LOGGER.info("Starting to get tweets with keyword: "+user+".");
+		LOGGER.info("Starting to get and clasify tweets with keyword: "+user+".");
 		db.getTweets(user,cantBajar);
 		db.closeFile();
 		
-		
-		LOGGER.info("Starting to clasify tweets.");		
-		
-		LOGGER.info("Finish Clasification");
+		LOGGER.info("Finish get and clasify");
 		LOGGER.info(" -------------END KEYWORD CONTROLLER--------------");
 		
+//		System.out.println(db.returnForQlik());
+//		System.out.println("A VERRR");
+//		System.out.println("TEXT	RETWEETS	COMMENTS	SENTIMENT	DATE	LOCATION	CITY	LIKES	USR	GENDER\r\n" + 
+//				"Happy for all3 the chrismas gifts	0	0	Positive	01/01/2018	ARG	ROSARIO	21	Eli	F\r\n" + 
+//				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	M\r\n$" + 
+//				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	M\r\n" + 
+//				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	M\r\n" + 
+//				"");
+		//System.out.println("$BEGIN$"+db.returnForQlik()+"$END$");
 		
-		//SACAR
+		return db.returnForQlik();
 
-		//File file = new File("ExampleTweets_1.csv");
+		//return "TEXT	RETWEETS	SENTIMENT	DATE	LOCATION	"+a+"	PLACE	TIMEZONE\nT	RE	SEN	D	LO	U	P	TI\n";
 		
-//		Path path = Paths.get("ExampleTweets_1");
-//		byte[] data = null;
-//		try {
-//			data = Files.readAllBytes(path);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		try {
-//			IOUtils.copy(new ByteArrayInputStream(data), response.getOutputStream());
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		response.setHeader("Content-Disposition", "attachment;filename=ExampleTweets_1.csv");
-
-        //return response;
-		//.................
-		
-		
-		//return file.getAbsoluteFile();
-		//return "Hola Ing. ERomanM: getKeywords finalizo exitosamente Llamada por Front End";
-		//return "{ key1: 'value1', key2: 'value2' }";
-		return "TEXT	RETWEETS	COMMENTS	SENTIMENT	DATE	LOCATION	CITY	LIKES	USR	GENDER\r\n" + 
-				"Happy for all3 the chrismas gifts	0	0	Positive	01/01/2018	ARG	ROSARIO	21	Eli	F\r\n" + 
-				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	M\r\n" + 
-				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	M\r\n" + 
-				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	M\r\n" + 
-				"";
+//		return "TEXT	RETWEETS	COMMENTS	SENTIMENT	DATE	LOCATION	CITY	LIKES	USR	GENDER\r\n" + 
+//				"Happy for all3 the chrismas gifts	0	0	Positive	01/01/2018	ARG	ROSARIO	21	Eli	F\r\n" + 
+//				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	M\r\n" + 
+//				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	M\r\n" + 
+//				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	M\r\n" + 
+//				"";
 		
 	}
 

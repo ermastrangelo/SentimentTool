@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import algorithms.AlgoritmosClasificacion;
 import analizer.ClasificadorDeSentimientos;
+import twitter4j.Status;
 
 public abstract class DataBase {
 	
@@ -60,6 +61,43 @@ public abstract class DataBase {
 		}
 		return lineaFinal;
 
+	}
+	
+	
+	public String armarLineaCSV(Status status) {
+		String line="";
+		String tweetLimpio=""; 
+		
+		tweetLimpio=extractorT.preProcesarTweet(status.getText());
+		
+		line+=tweetLimpio+"	";//text
+		
+		if (tweetLimpio.length()<2){
+			line="";
+			return line;			
+		}
+
+		line+=status.getRetweetCount()+"	";//retweets		
+		line+=clasificador.clasificarTweets(tweetLimpio)+"	";//sentiment
+		
+		line+=status.getCreatedAt().getMonth()+"	";//date
+		
+//		line+=status.getGeoLocation()+"	";//latitud longitud
+		
+		line+=status.getUser().getScreenName()+"	";//name
+
+//		if (status.getPlace()!=null) {
+//			line+=status.getPlace().getCountry()+"	";//place donde twiteo
+//		}else { line+="-	";}
+		
+		if (status.getUser()!=null) {
+			line+=status.getUser().getLocation()+"	";//user location
+		}else { line+="-	";}
+
+		line+=status.getUser().getTimeZone()+ " \n";//user timezone
+
+		
+		return line;
 	}
 	
 	
