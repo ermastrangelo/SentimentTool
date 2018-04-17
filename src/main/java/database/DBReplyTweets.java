@@ -36,6 +36,7 @@ public class DBReplyTweets extends DataBase {
 
 		Query query = new Query("[to:" + userName + "]");
 		query.count(100);
+		query.setLang("en");//Lenguaje Ingles
 		QueryResult result = null;
 
 		int coments = 1;

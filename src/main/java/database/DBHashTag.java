@@ -43,6 +43,8 @@ public class DBHashTag extends DataBase {
 
 		Twitter twitter = new TwitterFactory().getInstance();
 		Query query = new Query(hashTag);
+		
+		query.setLang("en");//Lenguaje Ingles
 
 		long lastID = Long.MAX_VALUE;
 		ArrayList<Status> tweets = new ArrayList<Status>();
@@ -77,20 +79,15 @@ public class DBHashTag extends DataBase {
 			query.setMaxId(lastID - 1);
 		}
 		
-		//tratar de poner encabezado
-		//writeDb("TEXT	RETWEETS	SENTIMENT	DATE	LOCATION	USER	PLACE	TIMEZONE\r\n");
 
-		//por cada tweet recibido armo la linea que quiero almacenar
+		//por cada tweet ob artenidomo la linea que quiero almacenar
 		String line="";
 		for (Status t : tweets) {
-			if (t.getLang().equals("en")) {//solo idioma ingles
-				
+			
 				line=armarLineaCSV(t);
 				if(line.length()>2) {
 					writeDb(line);
-				}
-			}
-			
+				}			
 		}
 
 		LOGGER.info("Downloaded tweets: " + tweets.size() + ".");
