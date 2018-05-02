@@ -62,12 +62,14 @@ public class DBReplyTweets extends DataBase {
 
 					if (status.getInReplyToStatusId() == tweetId) {
 
-						numBajados++;
-						coments++;
+						
+						
 						
 						line=armarLineaCSV(status);
 						if(line.length()>2) {
 							writeDb(line);
+							numBajados++;
+							coments++;
 						}
 						
 						if (numBajados == cantBajar) {

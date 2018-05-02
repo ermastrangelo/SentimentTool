@@ -29,15 +29,15 @@ public class ClasificadorDeSentimientos {
 	public String parsearSentimiento(int Sentimiento) {
 		switch (Sentimiento) {
 		case 0:
-			return "Negative";
+			return "Negativo";
 		case 1:
-			return "Negative";
+			return "Negativo";
 		case 2:
 			return "Neutral";
 		case 3:
-			return "Positive";
+			return "Positivo";
 		case 4:
-			return "Positive";
+			return "Positivo";
 		default:
 			return "SENTIMIENTO RARO";
 		}

@@ -66,8 +66,9 @@ public class DBUserTweets extends DataBase {
 				line=armarLineaCSV(t);
 				if(line.length()>2) {
 					writeDb(line);
+					cantBajar--;
 				}
-				cantBajar--;
+				
 			} else {
 				LOGGER.info("Downloaded tweets: " + bajados + ".");
 				return;

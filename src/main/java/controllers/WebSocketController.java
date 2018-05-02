@@ -26,6 +26,8 @@ import database.DataBase;
 public class WebSocketController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketController.class);
+	private static int idCount=1;
+	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping("/websocket")
 
@@ -58,18 +60,20 @@ public class WebSocketController {
 
 			// Open TesisApp.qvf
 			LOGGER.info("Starting Open Qlik engine api session");
-			newMessage = "{\"jsonrpc\": \"2.0\",\"id\": 2,\"method\": \"OpenDoc\",\"handle\": -1,\"params\": [ \"C:\\\\Users\\\\Eric\\\\Documents\\\\Qlik\\\\Sense\\\\Apps\\\\TesisApp.qvf\" ]}";
+			newMessage = "{\"jsonrpc\": \"2.0\",\"id\": "+idCount+",\"method\": \"OpenDoc\",\"handle\": -1,\"params\": [ \"C:\\\\Users\\\\Eric\\\\Documents\\\\Qlik\\\\Sense\\\\Apps\\\\TesisApp.qvf\" ]}";
+			idCount++;
 			clientEndPoint.sendMessage(newMessage);
 
 			Thread.sleep(5000);
 
 			// modify Rest connection with parameters
 			LOGGER.info("Starting to modify the Qlik app rest connection");
-			newMessage = "{\"jsonrpc\": \"2.0\",\"id\": 10, \"method\": \"ModifyConnection\", \"handle\": 1, \"params\": [\"7b5d4372-3431-47b2-a60d-48d9fa719223\", {\"qName\": \"RestBackend\", \"qConnectionString\":\"CUSTOM CONNECT TO \\\"provider=QvRestConnector.exe;url=http://localhost:8080/"
+			newMessage = "{\"jsonrpc\": \"2.0\",\"id\": "+idCount+", \"method\": \"ModifyConnection\", \"handle\": 1, \"params\": [\"7b5d4372-3431-47b2-a60d-48d9fa719223\", {\"qName\": \"RestBackend\", \"qConnectionString\":\"CUSTOM CONNECT TO \\\"provider=QvRestConnector.exe;url=http://localhost:8080/"
 					+ action
 					+ ";timeout=30;method=GET;autoDetectResponseType=true;keyGenerationStrategy=0;authSchema=anonymous;skipServerCertificateValidation=false;useCertificate=No;certificateStoreLocation=CurrentUser;certificateStoreName=My;queryParameters=id%2"
 					+ tweetId + "%1user%2" + user + "%1cantBajar%2" + cantBajar
 					+ ";addMissingQueryParametersToFinalRequest=false;PaginationType=None;allowResponseHeaders=false;allowHttpsOnly=false;\\\"\", \"qType\": \"QvRestConnector.exe\"} ] }";
+			idCount++;
 			clientEndPoint.sendMessage(newMessage);
 
 			Thread.sleep(5000);
@@ -77,14 +81,16 @@ public class WebSocketController {
 			
 			// do Reload
 			LOGGER.info("Starting to reload Qlik app");
-			newMessage="{\"handle\": 1,\"method\": \"DoReload\",\"params\": {\"qMode\": 0,\"qPartial\": false,\"qDebug\": false}}";
+			newMessage="{\"jsonrpc\": \"2.0\",\"id\": "+idCount+",\"handle\": 1,\"method\": \"DoReload\",\"params\": {\"qMode\": 0,\"qPartial\": false,\"qDebug\": false}}";
+			idCount++;
 			clientEndPoint.sendMessage(newMessage);
 			
 			Thread.sleep(30000);
 			
 			// do Save
 			LOGGER.info("Starting to save Qlik app");
-			newMessage="{\"jsonrpc\": \"2.0\", \"id\": 6, \"method\": \"DoSave\", \"handle\": 1, \"params\": [ ] }";
+			newMessage="{\"jsonrpc\": \"2.0\", \"id\": "+idCount+", \"method\": \"DoSave\", \"handle\": 1, \"params\": [ ] }";
+			idCount++;
 			clientEndPoint.sendMessage(newMessage);
 			
 			Thread.sleep(5000);

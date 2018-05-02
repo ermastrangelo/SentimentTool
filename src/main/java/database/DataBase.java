@@ -70,6 +70,8 @@ public abstract class DataBase {
 		
 		tweetLimpio=extractorT.preProcesarTweet(status.getText());
 		
+		
+		
 		line+=tweetLimpio+"	";//text
 		
 		if (tweetLimpio.length()<2){
@@ -78,11 +80,15 @@ public abstract class DataBase {
 		}
 
 		line+=status.getRetweetCount()+"	";//retweets		
+		
 		line+=clasificador.clasificarTweets(tweetLimpio)+"	";//sentiment
 		
-		line+=status.getCreatedAt().getMonth()+"	";//date
 		
-//		line+=status.getGeoLocation()+"	";//latitud longitud
+//		line+=status.getCreatedAt().getDay()+"	";//date day		
+//		line+=status.getCreatedAt().getMonth()+"	";//date month
+//		line+=status.getCreatedAt().getYear()+"	";//date year
+		
+		line+=status.getCreatedAt()+"	";//date time
 		
 		line+=status.getUser().getScreenName()+"	";//name
 
@@ -93,6 +99,12 @@ public abstract class DataBase {
 		if (status.getUser()!=null) {
 			line+=status.getUser().getLocation()+"	";//user location
 		}else { line+="-	";}
+		
+		
+//		if (status.getGeoLocation()!=null) {
+//			line+= status.getGeoLocation()+"	";//latitud longitud
+//		}else { line+="-	";}
+		
 
 		line+=status.getUser().getTimeZone()+ " \n";//user timezone
 

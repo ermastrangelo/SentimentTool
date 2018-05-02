@@ -51,13 +51,13 @@ public class KeywordController {
 		String id = requestParams.get("id");
 		String user = requestParams.get("user");//equivale al keyword
 		//String algorithm = requestParams.get("algorithm"); HARCODIE ALGORITMO 2
-		String algorithm = "2";
+		String algorithm = "1";
 		String cantBajarString = requestParams.get("cantBajar");
 		int cantBajar = Integer.parseInt(cantBajarString);
 
 		// instancio algoritmos
 		AlgoritmosClasificacion algo = null;
-		if (algorithm.equals("1")) {
+		if (algorithm.equals("2")) {
 			algo = new AlgorithmStanfordCoreNLP();
 			LOGGER.info("Algorithm StanfordCoreNLP created.");
 		} else {
