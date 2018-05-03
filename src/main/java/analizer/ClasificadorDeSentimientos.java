@@ -26,62 +26,42 @@ public class ClasificadorDeSentimientos {
 		this.algoritmh = a;
 	}
 
-	public void mostrarSentimiento(int Sentimiento) {
+	public String parsearSentimiento(int Sentimiento) {
 		switch (Sentimiento) {
 		case 0:
-			System.out.println("Very negative 0");
-			break;
+			return "Negativo";
 		case 1:
-			System.out.println("Negative 1");
-			break;
+			return "Negativo";
 		case 2:
-			System.out.println("Neutral 2");
-			break;
+			return "Neutral";
 		case 3:
-			System.out.println("Positive 3");
-			break;
+			return "Positivo";
 		case 4:
-			System.out.println("Very positive 4");
-			break;
+			return "Positivo";
 		default:
-			System.out.println("SENTIMIENTO RARO");
-			break;
+			return "SENTIMIENTO RARO";
 		}
+		
 	}
 
-	public void clasificarTweets() {
+	public String clasificarTweets(String line) {
 
-		String fileName = "TweetsDB";
+//		String fileName = "TweetsDB";
 		int sentimiento = -1;
+		String sentimientoString="";
 
-		// solo toma una linea, la envia a clasificar y guarda el resultado
-		try {
-			br = new BufferedReader(new FileReader(fileName));
+		if ((line.length() != 0) && (line != "\n") && (line != " ")) {
+			
+			// mando a clasificar
+			sentimiento = algoritmh.clasificar(line);
+			
+			sentimientoString=parsearSentimiento(sentimiento);
+			
 
-			String line = br.readLine();
-
-			while (line != null) {
-
-				if ((line.length() != 0) && (line != "\n") && (line != " ")) {
-					// mando a clasificar
-
-					sentimiento = algoritmh.clasificar(line);
-
-					// almaceno en algun archivo csv
-
-					// mostrarSentimiento(sentimiento);
-				}
-				line = br.readLine();
-
-			}
-
-			br.close();
-
-		} catch (FileNotFoundException e) {
-			LOGGER.error("Opening TweetsDB 1: " + e.getMessage());
-		} catch (IOException e) {
-			LOGGER.error("Opening TweetsDB 1: " + e.getMessage());
+			// mostrarSentimiento(sentimiento);
 		}
+		
+		return sentimientoString;
 	}
 
 }

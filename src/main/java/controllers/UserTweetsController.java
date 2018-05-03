@@ -26,8 +26,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UserTweetsController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserTweetsController.class);
+	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping("/usertweets")
+	
 	public String getUserTweets(@RequestParam Map<String, String> requestParams) {
 
 		LOGGER.info(" -------------BEGIN USER TWEETS CONTROLLER--------------");
@@ -39,6 +41,7 @@ public class UserTweetsController {
 		String cantBajarString = requestParams.get("cantBajar");
 		int cantBajar = Integer.parseInt(cantBajarString);
 		
+		// instancio algoritmos
 		AlgoritmosClasificacion algo = null;
 		if (algorithm.equals("1")) {
 			algo = new AlgorithmStanfordCoreNLP();
@@ -48,18 +51,21 @@ public class UserTweetsController {
 			LOGGER.info("Algorithm LingPipe created.");
 		}
 		
+		//instancio clasificador con el algoritmo
+		ClasificadorDeSentimientos cl = new ClasificadorDeSentimientos(algo);
+		
 		DataBase db;
-		db = new DBUserTweets();
-		LOGGER.info("Starting to get tweets from: "+user+".");
+		db = new DBUserTweets(cl);
+		LOGGER.info("Starting to get and clasify tweets from: "+user+".");
 		db.getTweets(user,cantBajar);
 		db.closeFile();
-		
-		LOGGER.info("Starting to clasify tweets.");	
-		ClasificadorDeSentimientos cl = new ClasificadorDeSentimientos(algo);
-		cl.clasificarTweets();
+
 		LOGGER.info("Finish Clasification");
 		LOGGER.info(" -------------END USER TWEETS CONTROLLER--------------");
-		return "Hola Ing. Mastrángelo: getUserTweets finalizo exitosamente Feriado";
+		
+		
+		return db.returnForQlik();
+		
 	}
 
 }

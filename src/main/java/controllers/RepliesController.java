@@ -20,12 +20,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 //http://localhost:8080/replies?id=958406889288716290&user=LeoDiCaprio&cantBajar=500
 
+
 @RestController
 public class RepliesController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(RepliesController.class);
+	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping("/replies")
+	
 	public String getReplies(@RequestParam Map<String, String> requestParams) {
 
 		LOGGER.info(" -------------BEGIN REPLIES CONTROLLER--------------");
@@ -37,6 +40,7 @@ public class RepliesController {
 		String cantBajarString = requestParams.get("cantBajar");
 		int cantBajar = Integer.parseInt(cantBajarString);
 		
+		// instancio algoritmos
 		AlgoritmosClasificacion algo = null;
 		if (algorithm.equals("1")) {
 			algo = new AlgorithmStanfordCoreNLP();
@@ -46,19 +50,19 @@ public class RepliesController {
 			LOGGER.info("Algorithm LingPipe created.");
 		}
 		
+		//instancio clasificador con el algoritmo
+		ClasificadorDeSentimientos cl = new ClasificadorDeSentimientos(algo);
+		
 		DataBase db;
-		db = new DBReplyTweets(id);
-		LOGGER.info("Starting to get replies from : "+user+".");
+		db = new DBReplyTweets(cl,id);
+		LOGGER.info("Starting to get and clasify replies from : "+user+".");
 		db.getTweets(user,cantBajar);
 		db.closeFile();
 
-		LOGGER.info("Starting to clasify tweets.");
-		ClasificadorDeSentimientos cl = new ClasificadorDeSentimientos(algo);
-		cl.clasificarTweets();
 		LOGGER.info("Finish Clasification");
 		LOGGER.info(" -------------END REPLIES CONTROLLER--------------");
 		
-		return "Hola Ing. Mastrángelo: getReplies finalizo exitosamente Feriado";
+		return db.returnForQlik();
 	}
 
 }

@@ -40,7 +40,11 @@ public class AlgorithmLingPipe implements AlgoritmosClasificacion {// clasifyerL
 			return 3;
 
 		} else {
-			return 1;
+			
+			if (classification.bestCategory().equals("neu")) {
+			return 2;}
+			else
+				{return 1;}
 		}
 	}
 

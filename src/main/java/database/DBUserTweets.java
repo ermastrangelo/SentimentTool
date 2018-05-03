@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import analizer.ClasificadorDeSentimientos;
 import twitter4j.Paging;
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -16,8 +17,8 @@ public class DBUserTweets extends DataBase {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DBUserTweets.class);
 
-	public DBUserTweets() {
-		super();
+	public DBUserTweets(ClasificadorDeSentimientos cl) {
+		super(cl);
 	}
 
 	@Override
@@ -27,7 +28,7 @@ public class DBUserTweets extends DataBase {
 		// FALTA: COMO SABER CUANTOS BAJAR
 
 		if (cantBajar == 0) {
-			cantBajar = 500;
+			cantBajar = 100;
 		}
 
 		int cantBajadaAnt = 0;
@@ -59,10 +60,15 @@ public class DBUserTweets extends DataBase {
 
 		int bajados = cantBajar;
 
+		String line="";
 		for (Status t : tweets) {
 			if (cantBajar > 0) {
-				writeDb(t.getText());
-				cantBajar--;
+				line=armarLineaCSV(t);
+				if(line.length()>2) {
+					writeDb(line);
+					cantBajar--;
+				}
+				
 			} else {
 				LOGGER.info("Downloaded tweets: " + bajados + ".");
 				return;

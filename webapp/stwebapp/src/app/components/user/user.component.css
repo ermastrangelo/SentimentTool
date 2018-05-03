@@ -10,9 +10,10 @@
   width: 900px;
 }
 .small {
+	
   background:  #404040;
   margin-left: 0px;
-  width: 250px;
+  width: 300px;
   height:130px;
   min-height: 90px;
   overflow: auto;
@@ -176,6 +177,13 @@ html {
   min-height: 90px;
 
 }
+
+ iframe
+    {
+        max-height: 200vh;
+        height:300px;
+        width:1300px;
+    }
 	
 	
 	

@@ -81,10 +81,21 @@ export class UserComponent implements OnInit { //declaro todo esto como una clas
 	  
 	  console.log("ANALIZAR USER TWEETS: "+this.variablesGetUserTweets.userName+this.variablesGetUserTweets.cantidadDescargar);
 	  
+	  this.dataService.getBackEnd('usertweets',this.variablesGetUserTweets.userName,'000000000',this.variablesGetUserTweets.cantidadDescargar).subscribe((engine) =>   {console.log(engine);
+		this.engine=engine; 
+		} );
+	  
   }
+  
   analizarReplies(){
+	  
 	  console.log("ANALIZAR REPLIES: "+this.variablesGetReplies.userName+this.variablesGetReplies.tweetId+this.variablesGetReplies.cantidadDescargar);
+	  
+	  this.dataService.getBackEnd('replies',this.variablesGetReplies.userName,this.variablesGetReplies.tweetId,this.variablesGetReplies.cantidadDescargar).subscribe((engine) =>   {console.log(engine);
+	  this.engine=engine;
+		} );  
   }
+  
   analizarHashtag(){
 	  
 	  console.log("ANALIZAR HASHTAG: "+this.variablesGetHashtag.userName+this.variablesGetHashtag.cantidadDescargar);
@@ -93,16 +104,7 @@ export class UserComponent implements OnInit { //declaro todo esto como una clas
 																																								this.engine=engine; 
 																																								} );
   }
-  
-//  analizarRestCall(){
-//	  //pasar action,user, id, cantBajar
-//	  
-//	  this.dataService.getPost('keywords',this.variablesGetHashtag.userName,'000000000',this.variablesGetHashtag.cantidadDescargar).subscribe((engine) =>   {console.log("salida eric: "+engine);
-//		this.engine=engine; 
-//		} );
-//	  
-//  }
-  
+
   onClick(){
 	  this.name="Roman";
 	  

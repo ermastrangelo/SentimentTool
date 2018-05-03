@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import controllers.KeywordController;
+import analizer.ClasificadorDeSentimientos;
 import twitter4j.Query;
 import twitter4j.QueryResult;
 import twitter4j.Status;
@@ -17,9 +18,10 @@ public class DBHashTag extends DataBase {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DBHashTag.class);
 
-	public DBHashTag() {
-		super();
+	public DBHashTag(ClasificadorDeSentimientos cl) {
+		super(cl);
 	}
+	
 
 	@Override
 	public void getTweets(String hashTag, int cantBajar) {
@@ -36,11 +38,13 @@ public class DBHashTag extends DataBase {
 		// ó porq una persona publica lo mismo identico
 
 		if (cantBajar == 0) {
-			cantBajar = 500;
+			cantBajar = 100;
 		}
 
 		Twitter twitter = new TwitterFactory().getInstance();
 		Query query = new Query(hashTag);
+		
+		query.setLang("en");//Lenguaje Ingles
 
 		long lastID = Long.MAX_VALUE;
 		ArrayList<Status> tweets = new ArrayList<Status>();
@@ -74,12 +78,16 @@ public class DBHashTag extends DataBase {
 
 			query.setMaxId(lastID - 1);
 		}
+		
 
+		//por cada tweet ob artenidomo la linea que quiero almacenar
+		String line="";
 		for (Status t : tweets) {
-			if (t.getLang().equals("en")) {//solo idioma ingles
-				writeDb(t.getText());
-			}
 			
+				line=armarLineaCSV(t);
+				if(line.length()>2) {
+					writeDb(line);
+				}			
 		}
 
 		LOGGER.info("Downloaded tweets: " + tweets.size() + ".");

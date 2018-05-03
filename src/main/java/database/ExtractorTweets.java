@@ -39,7 +39,7 @@ public class ExtractorTweets
 
 		String newHashtag = "";
 
-		String hashtagPattern = "([#][\\w_-áéíóúÁÉÍÓÚ]+)";
+		String hashtagPattern = "([#][\\w_-Ã¡Ã©Ã­Ã³ÃºÃ�Ã‰Ã�Ã“Ãš]+)";
 		Pattern p = Pattern.compile(hashtagPattern, Pattern.CASE_INSENSITIVE);
 		Matcher m = p.matcher(tweet);
 
@@ -49,7 +49,7 @@ public class ExtractorTweets
 
 			// ahora splittear el hastag encontrado
 
-			String wordPattern = "([A-ZÁÉÍÓÚ]([A-ZÁÉÍÓÚ]+)([a-záéíóú]+))|([A-Za-záéíóúÁÉÍÓÚ]([a-záéíóú]+))|([A-ZÁÉÍÓÚ]([A-ZÁÉÍÓÚ]+))";
+			String wordPattern = "([A-ZÃ�Ã‰Ã�Ã“Ãš]([A-ZÃ�Ã‰Ã�Ã“Ãš]+)([a-zÃ¡Ã©Ã­Ã³Ãº]+))|([A-Za-zÃ¡Ã©Ã­Ã³ÃºÃ�Ã‰Ã�Ã“Ãš]([a-zÃ¡Ã©Ã­Ã³Ãº]+))|([A-ZÃ�Ã‰Ã�Ã“Ãš]([A-ZÃ�Ã‰Ã�Ã“Ãš]+))";
 
 			Pattern p2 = Pattern.compile(wordPattern, Pattern.CANON_EQ);
 			Matcher m2 = p2.matcher(hashtag);
@@ -89,6 +89,10 @@ public class ExtractorTweets
 		// CaseSensitive.INSENSITIVE);
 
 		String tweetPreProcesado = tweet.replace("\n", " ").trim();
+		tweetPreProcesado=tweetPreProcesado.replace("\t", " ");
+		tweetPreProcesado=tweetPreProcesado.replace("	", " ");
+		tweetPreProcesado=tweetPreProcesado.replace("  ", " ");
+		
 		// remove "RT_"
 		if ((tweetPreProcesado.length()>=4)&&(tweetPreProcesado.substring(0, 3).equals("RT "))){
 			tweetPreProcesado=tweetPreProcesado.substring(3);
@@ -112,11 +116,11 @@ public class ExtractorTweets
 		// remove Numbers despues de split hashtag x si el hash tenia numeros
 		tweetPreProcesado = extraer(tweetPreProcesado, "([\\d]+)", CaseSensitive.INSENSITIVE);
 		// remove Symbols and single letters
-		tweetPreProcesado = extraer(tweetPreProcesado, "[^a-zA-ZáéíóúÁÉÍÓÚ'’ñÑ](.)[^a-zA-ZáéíóúÁÉÍÓÚ'’ñÑ]",
+		tweetPreProcesado = extraer(tweetPreProcesado, "[^a-zA-ZÃ¡Ã©Ã­Ã³ÃºÃ�Ã‰Ã�Ã“Ãš'â€™Ã±Ã‘](.)[^a-zA-ZÃ¡Ã©Ã­Ã³ÃºÃ�Ã‰Ã�Ã“Ãš'â€™Ã±Ã‘]",
 				CaseSensitive.INSENSITIVE);
 		// remove Ordinal
 		tweetPreProcesado = extraer(tweetPreProcesado, "[^a-zA-Z]+(nd|st|th|rd)[^a-zA-Z]+",
-				CaseSensitive.INSENSITIVE); // y si esta pegado a ñ o letra con
+				CaseSensitive.INSENSITIVE); // y si esta pegado a Ã± o letra con
 											// acento?
 
 		return tweetPreProcesado;
