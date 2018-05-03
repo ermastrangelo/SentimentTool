@@ -90,6 +90,8 @@ public class ExtractorTweets
 
 		String tweetPreProcesado = tweet.replace("\n", " ").trim();
 		tweetPreProcesado=tweetPreProcesado.replace("\t", " ");
+		tweetPreProcesado=tweetPreProcesado.replace("	", " ");
+		tweetPreProcesado=tweetPreProcesado.replace("  ", " ");
 		
 		// remove "RT_"
 		if ((tweetPreProcesado.length()>=4)&&(tweetPreProcesado.substring(0, 3).equals("RT "))){

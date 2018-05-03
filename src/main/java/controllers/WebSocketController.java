@@ -51,7 +51,7 @@ public class WebSocketController {
 			clientEndPoint.addMessageHandler(new WebsocketClientEndpoint.MessageHandler() {
 				public void handleMessage(String message) {
 					// System.out.println(message);
-					LOGGER.info(message);
+					LOGGER.info("Respuesta Engine Qlik: "+message);
 				}
 			});
 
@@ -76,8 +76,8 @@ public class WebSocketController {
 			idCount++;
 			clientEndPoint.sendMessage(newMessage);
 
-			Thread.sleep(5000);
-			Thread.sleep(15000);//se va a descargar los tweets
+			Thread.sleep(10000);
+			//Thread.sleep(25000);//se va a descargar los tweets
 			
 			// do Reload
 			LOGGER.info("Starting to reload Qlik app");

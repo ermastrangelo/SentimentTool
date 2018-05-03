@@ -75,7 +75,7 @@ public abstract class DataBase {
 		line+=tweetLimpio+"	";//text
 		
 		if (tweetLimpio.length()<2){
-			line="";
+			line="-	-	-	-	-	-	-	-	- \n";
 			return line;			
 		}
 
@@ -84,20 +84,22 @@ public abstract class DataBase {
 		line+=clasificador.clasificarTweets(tweetLimpio)+"	";//sentiment
 		
 		
-//		line+=status.getCreatedAt().getDay()+"	";//date day		
-//		line+=status.getCreatedAt().getMonth()+"	";//date month
-//		line+=status.getCreatedAt().getYear()+"	";//date year
+		line+=status.getCreatedAt().getDay()+"	";//date day		
+		line+=status.getCreatedAt().getMonth()+"	";//date month
+		line+=(status.getCreatedAt().getYear()+1900)+"	";//date year
+
+		//line+=status.getCreatedAt()+"	";//date time
 		
-		line+=status.getCreatedAt()+"	";//date time
-		
-		line+=status.getUser().getScreenName()+"	";//name
+		line+=status.getUser().getScreenName().replace("	", " ")+"	";//name
 
 //		if (status.getPlace()!=null) {
 //			line+=status.getPlace().getCountry()+"	";//place donde twiteo
 //		}else { line+="-	";}
 		
 		if (status.getUser()!=null) {
-			line+=status.getUser().getLocation()+"	";//user location
+			
+			line+=status.getUser().getLocation().replace("	", " ")+"	";//user location
+			
 		}else { line+="-	";}
 		
 		
@@ -106,8 +108,9 @@ public abstract class DataBase {
 //		}else { line+="-	";}
 		
 
-		line+=status.getUser().getTimeZone()+ " \n";//user timezone
+		line+=status.getUser().getTimeZone().replace("	", " ")+ " \n";//user timezone
 
+		System.out.println(line.replace("	", "$"));
 		
 		return line;
 	}

@@ -62,6 +62,8 @@ public class UserTweetsController {
 
 		LOGGER.info("Finish Clasification");
 		LOGGER.info(" -------------END USER TWEETS CONTROLLER--------------");
+		
+		
 		return db.returnForQlik();
 		
 	}
