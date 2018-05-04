@@ -65,54 +65,63 @@ public abstract class DataBase {
 	
 	
 	public String armarLineaCSV(Status status) {
-		String line="";
-		String tweetLimpio=""; 
-		
-		tweetLimpio=extractorT.preProcesarTweet(status.getText());
-		
-		
-		
-		line+=tweetLimpio+"	";//text
-		
-		if (tweetLimpio.length()<2){
-			line="-	-	-	-	-	-	-	-	- \n";
-			return line;			
-		}
+		String line = "";
+		String tweetLimpio = "";
 
-		line+=status.getRetweetCount()+"	";//retweets		
-		
-		line+=clasificador.clasificarTweets(tweetLimpio)+"	";//sentiment
-		
-		
-		line+=status.getCreatedAt().getDay()+"	";//date day		
-		line+=status.getCreatedAt().getMonth()+"	";//date month
-		line+=(status.getCreatedAt().getYear()+1900)+"	";//date year
+		if (status != null) {
 
-		//line+=status.getCreatedAt()+"	";//date time
-		
-		line+=status.getUser().getScreenName().replace("	", " ")+"	";//name
+			tweetLimpio = extractorT.preProcesarTweet(status.getText());
 
-//		if (status.getPlace()!=null) {
-//			line+=status.getPlace().getCountry()+"	";//place donde twiteo
-//		}else { line+="-	";}
-		
-		if (status.getUser()!=null) {
+			line += tweetLimpio + "	";// text
+
+			if (tweetLimpio.length() < 2) {
+				line = "NNNNNNNNNNUUUUUUUUUULLLLLLLLLLLLLLL	";
+				//return line;
+			}
+
+			line += status.getRetweetCount() + "	";// retweets int
+
+			line += clasificador.clasificarTweets(tweetLimpio) + "	";// sentiment
+
 			
-			line+=status.getUser().getLocation().replace("	", " ")+"	";//user location
+			if(status.getCreatedAt()!=null){
+				line += status.getCreatedAt().getDay() + "	";// date day
+				line += status.getCreatedAt().getMonth() + "	";// date month
+				line += (status.getCreatedAt().getYear() + 1900) + "	";// date year
+			} else {line += "-	-	-	";}
+
+			if(status.getUser()!=null){
+				line += status.getUser().getScreenName()+ "	";// name  .replace("	", " ") 
+			} else {line += "-	";}
 			
-		}else { line+="-	";}
-		
-		
-//		if (status.getGeoLocation()!=null) {
-//			line+= status.getGeoLocation()+"	";//latitud longitud
-//		}else { line+="-	";}
-		
 
-		line+=status.getUser().getTimeZone().replace("	", " ")+ " \n";//user timezone
+			if (status.getUser().getLocation() != null) {
+				
+				if (status.getUser().getLocation().equals("")){
+					line += "-";					
+				}else {
+					line += status.getUser().getLocation() + "";// user location .replace("	", " ")
+				}		
+				
+				
+			} else {
+				line += "-";
+			}
 
-		System.out.println(line.replace("	", "$"));
-		
-		return line;
+//			if (status.getUser().getTimeZone() != null) {
+//
+//				line += status.getUser().getTimeZone() + " \n";// user timezone .replace("	", " ")
+//				System.out.println("eric"+status.getUser().getTimeZone()+"eric");
+//			} else {
+//				line += "- \n";
+//			}
+
+			
+			return line+" \n";// .replace("\"", "")
+
+		} // if status !=null
+
+		return "";
 	}
 	
 	
@@ -139,5 +148,7 @@ public abstract class DataBase {
 	}
 
 	public abstract void getTweets(String userName,int cantBajar);
+	
+	
 
 }

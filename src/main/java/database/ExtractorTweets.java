@@ -115,9 +115,15 @@ public class ExtractorTweets
 		tweetPreProcesado = splitHashtag(tweetPreProcesado);
 		// remove Numbers despues de split hashtag x si el hash tenia numeros
 		tweetPreProcesado = extraer(tweetPreProcesado, "([\\d]+)", CaseSensitive.INSENSITIVE);
+		
+		
 		// remove Symbols and single letters
-		tweetPreProcesado = extraer(tweetPreProcesado, "[^a-zA-ZÃ¡Ã©Ã­Ã³ÃºÃ�Ã‰Ã�Ã“Ãš'â€™Ã±Ã‘](.)[^a-zA-ZÃ¡Ã©Ã­Ã³ÃºÃ�Ã‰Ã�Ã“Ãš'â€™Ã±Ã‘]",
-				CaseSensitive.INSENSITIVE);
+//		tweetPreProcesado = extraer(tweetPreProcesado, "[^a-zA-ZÃ¡Ã©Ã­Ã³ÃºÃ�Ã‰Ã�Ã“Ãš'â€™Ã±Ã‘](.)[^a-zA-ZÃ¡Ã©Ã­Ã³ÃºÃ�Ã‰Ã�Ã“Ãš'â€™Ã±Ã‘]",
+//				CaseSensitive.INSENSITIVE);
+		
+		tweetPreProcesado = extraer(tweetPreProcesado, "[^a-zA-Z\\s]+",CaseSensitive.INSENSITIVE);//SACAR prob
+		
+		
 		// remove Ordinal
 		tweetPreProcesado = extraer(tweetPreProcesado, "[^a-zA-Z]+(nd|st|th|rd)[^a-zA-Z]+",
 				CaseSensitive.INSENSITIVE); // y si esta pegado a Ã± o letra con
