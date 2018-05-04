@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-//LLAMAR A QLIK DIRECTAMENTE??
+//LLAMAR A BackEnd desde browser
 //http://localhost:8080/keywords?id=121143434&user=mambo&cantBajar=500
 
 @RestController
@@ -77,27 +77,8 @@ public class KeywordController {
 		LOGGER.info("Finish get and clasify");
 		LOGGER.info(" -------------END KEYWORD CONTROLLER--------------");
 		
-//		System.out.println(db.returnForQlik());
-//		System.out.println("A VERRR");
-//		System.out.println("TEXT	RETWEETS	COMMENTS	SENTIMENT	DATE	LOCATION	CITY	LIKES	USR	GENDER\r\n" + 
-//				"Happy for all3 the chrismas gifts	0	0	Positive	01/01/2018	ARG	ROSARIO	21	Eli	F\r\n" + 
-//				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	M\r\n$" + 
-//				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	M\r\n" + 
-//				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	M\r\n" + 
-//				"");
-		//System.out.println("$BEGIN$"+db.returnForQlik()+"$END$");
 		
-		return db.returnForQlik();
-
-		//return "TEXT	RETWEETS	SENTIMENT	DATE	LOCATION	"+a+"	PLACE	TIMEZONE\nT	RE	SEN	D	LO	U	P	TI\n";
-		
-//		return "TEXT	RETWEETS	COMMENTS	SENTIMENT	DATE	LOCATION	CITY	LIKES	USR	GENDER\r\n" + 
-//				"Happy for all3 the chrismas gifts	0	0	Positive	01/01/2018	ARG	ROSARIO	21	Eli	F\r\n" + 
-//				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	M\r\n" + 
-//				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	M\r\n" + 
-//				"i hate war a lot of people is sad	5	26	Negative	01/01/2017	FRA	PARIS	64	Eric	M\r\n" + 
-//				"";
-		
+		return db.returnForQlik();		
 	}
 
 }
