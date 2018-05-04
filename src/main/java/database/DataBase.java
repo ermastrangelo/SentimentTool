@@ -46,8 +46,12 @@ public abstract class DataBase {
 			String line = nuevoBuffer.readLine();
 
 			while (line != null) {
-
-				lineaFinal += line+"\n";
+				
+				//chequeo que no vengan lineas en blanco, que al agregar salto de linea generan entrada erronea para qlik
+				if (line.length() > 3) {
+					lineaFinal += line+"\n";
+				}
+				
 				line = nuevoBuffer.readLine();
 
 			}
@@ -72,16 +76,15 @@ public abstract class DataBase {
 
 			tweetLimpio = extractorT.preProcesarTweet(status.getText());
 
-			line += tweetLimpio + "	";// text
+			line += tweetLimpio + "	";// texto tweet
 
 			if (tweetLimpio.length() < 2) {
 				line = "NNNNNNNNNNUUUUUUUUUULLLLLLLLLLLLLLL	";
-				//return line;
 			}
 
-			line += status.getRetweetCount() + "	";// retweets int
+			line += status.getRetweetCount() + "	";// cantidad retweets int
 
-			line += clasificador.clasificarTweets(tweetLimpio) + "	";// sentiment
+			line += clasificador.clasificarTweets(tweetLimpio) + "	";// tweet sentiment
 
 			
 			if(status.getCreatedAt()!=null){
@@ -91,7 +94,7 @@ public abstract class DataBase {
 			} else {line += "-	-	-	";}
 
 			if(status.getUser()!=null){
-				line += status.getUser().getScreenName()+ "	";// name  .replace("	", " ") 
+				line += status.getUser().getScreenName()+ "	";// name 
 			} else {line += "-	";}
 			
 
@@ -100,24 +103,14 @@ public abstract class DataBase {
 				if (status.getUser().getLocation().equals("")){
 					line += "-";					
 				}else {
-					line += status.getUser().getLocation() + "";// user location .replace("	", " ")
-				}		
-				
+					line += status.getUser().getLocation() + "";// user location
+				}				
 				
 			} else {
 				line += "-";
 			}
 
-//			if (status.getUser().getTimeZone() != null) {
-//
-//				line += status.getUser().getTimeZone() + " \n";// user timezone .replace("	", " ")
-//				System.out.println("eric"+status.getUser().getTimeZone()+"eric");
-//			} else {
-//				line += "- \n";
-//			}
-
-			
-			return line+" \n";// .replace("\"", "")
+			return line+" \n";
 
 		} // if status !=null
 
@@ -129,9 +122,10 @@ public abstract class DataBase {
 		//guarda en la base de datos el tweet dado
 
 		try {
-			if((tweet!=null)&(tweet.length() > 1)){
-				//bw.write(tweet+ "\n");
+			if((tweet!=null)&(tweet.length() > 15)){
+				
 				bw.write(tweet);
+
 			}
 		} catch (IOException e) {
 			LOGGER.error("Writing line: " + e.getMessage());

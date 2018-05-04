@@ -27,10 +27,11 @@ public class WebSocketController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketController.class);
 	private static int idCount=1;
+	private static int estado=0;//segun la respuesta de qlik cambio de estado, para saber cuando DoSave
 	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping("/websocket")
-
+	
 	public String getKeywords(@RequestParam Map<String, String> requestParams) {
 
 		String newMessage = "";
@@ -50,21 +51,33 @@ public class WebSocketController {
 			// add listener
 			clientEndPoint.addMessageHandler(new WebsocketClientEndpoint.MessageHandler() {
 				public void handleMessage(String message) {
-					// System.out.println(message);
-					LOGGER.info("Respuesta Engine Qlik: "+message);
+
+					estado++;
+					LOGGER.info("Engine Qlik estado "+estado+": "+message);
+					if (estado==3) {
+						
+					// do Save
+						LOGGER.info("Starting to save Qlik app");
+						String newMessage="{\"jsonrpc\": \"2.0\", \"id\": "+idCount+", \"method\": \"DoSave\", \"handle\": 1, \"params\": [ ] }";
+						idCount++;
+						clientEndPoint.sendMessage(newMessage);
+						
+						//Thread.sleep(1000);
+						
+					}
 				}
 			});
 
-			// wait 5 seconds for messages from websocket
-			Thread.sleep(5000);
-
+			// wait 1 seconds = 1000 miliseconds for messages from websocket (unidad en milisegundos)
+			Thread.sleep(1000);
+			estado=0;
 			// Open TesisApp.qvf
 			LOGGER.info("Starting Open Qlik engine api session");
 			newMessage = "{\"jsonrpc\": \"2.0\",\"id\": "+idCount+",\"method\": \"OpenDoc\",\"handle\": -1,\"params\": [ \"C:\\\\Users\\\\Eric\\\\Documents\\\\Qlik\\\\Sense\\\\Apps\\\\TesisApp.qvf\" ]}";
 			idCount++;
 			clientEndPoint.sendMessage(newMessage);
 
-			Thread.sleep(5000);
+			Thread.sleep(1000);
 
 			// modify Rest connection with parameters
 			LOGGER.info("Starting to modify the Qlik app rest connection");
@@ -76,7 +89,7 @@ public class WebSocketController {
 			idCount++;
 			clientEndPoint.sendMessage(newMessage);
 
-			Thread.sleep(10000);
+			Thread.sleep(1000);
 			//Thread.sleep(25000);//se va a descargar los tweets
 			
 			// do Reload
@@ -85,20 +98,28 @@ public class WebSocketController {
 			idCount++;
 			clientEndPoint.sendMessage(newMessage);
 			
-			Thread.sleep(30000);
+//			if (Integer.valueOf(cantBajar)>500) {
+//				Thread.sleep(30000);//30000 HAY QUE HACER QUE EL THREAD SIGA DE ACA CUANDO DEVUELVA LA RESPUESTA QLIK ENGINE
+//			}else {
+//				Thread.sleep(10000);//30000 HAY QUE HACER QUE EL THREAD SIGA DE ACA CUANDO DEVUELVA LA RESPUESTA QLIK ENGINE
+//			}
+//			
 			
-			// do Save
-			LOGGER.info("Starting to save Qlik app");
-			newMessage="{\"jsonrpc\": \"2.0\", \"id\": "+idCount+", \"method\": \"DoSave\", \"handle\": 1, \"params\": [ ] }";
-			idCount++;
-			clientEndPoint.sendMessage(newMessage);
 			
-			Thread.sleep(5000);
+//			// do Save lo meto para que lo haga cuando qlik resopndio
+//			LOGGER.info("Starting to save Qlik app");
+//			newMessage="{\"jsonrpc\": \"2.0\", \"id\": "+idCount+", \"method\": \"DoSave\", \"handle\": 1, \"params\": [ ] }";
+//			idCount++;
+//			clientEndPoint.sendMessage(newMessage);
+//			
+//			Thread.sleep(1000);
 
-		} catch (InterruptedException ex) {
+			} 
+					catch (InterruptedException ex) {
 			LOGGER.error("InterruptedException exception: " + ex.getMessage());
 			System.err.println("InterruptedException exception: " + ex.getMessage());
-		} catch (URISyntaxException ex) {
+		} 
+			catch (URISyntaxException ex) {
 			LOGGER.error("URISyntaxException exception: " + ex.getMessage());
 			System.err.println("URISyntaxException exception: " + ex.getMessage());
 		}
