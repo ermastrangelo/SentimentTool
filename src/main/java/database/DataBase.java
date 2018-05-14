@@ -91,7 +91,8 @@ public abstract class DataBase {
 				line += status.getCreatedAt().getDay() + "	";// date day
 				line += status.getCreatedAt().getMonth() + "	";// date month
 				line += (status.getCreatedAt().getYear() + 1900) + "	";// date year
-			} else {line += "-	-	-	";}
+				line+= status.getCreatedAt()+ "	";//date
+			} else {line += "-	-	-	-	";}
 
 			if(status.getUser()!=null){
 				line += status.getUser().getScreenName()+ "	";// name 
