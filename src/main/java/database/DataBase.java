@@ -84,7 +84,15 @@ public abstract class DataBase {
 
 			line += status.getRetweetCount() + "	";// cantidad retweets int
 
-			line += clasificador.clasificarTweets(tweetLimpio) + "	";// tweet sentiment
+			
+			if (tweetLimpio.length() < 2) {
+				line += "Neutral	";// tweet sentiment;
+			}else
+			{	
+				line += clasificador.clasificarTweets(tweetLimpio) + "	";// tweet sentiment
+			}
+			
+			
 
 			
 			if(status.getCreatedAt()!=null){
