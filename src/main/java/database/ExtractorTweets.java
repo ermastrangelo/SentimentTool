@@ -13,7 +13,7 @@ public class ExtractorTweets
 	public ExtractorTweets(){}
 	
 	
-	private String extraer(String tweet, String regEx, CaseSensitive cs) {
+	public String extraer(String tweet, String regEx, CaseSensitive cs) {
 
 		Pattern p = Pattern.compile(regEx, Pattern.CASE_INSENSITIVE);
 

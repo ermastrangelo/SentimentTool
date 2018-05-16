@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 
 import algorithms.AlgoritmosClasificacion;
 import analizer.ClasificadorDeSentimientos;
+import ch.qos.logback.core.net.SyslogOutputStream;
+import database.ExtractorTweets.CaseSensitive;
 import twitter4j.Status;
 
 public abstract class DataBase {
@@ -39,6 +41,7 @@ public abstract class DataBase {
 	public String returnForQlik() {
 
 		String lineaFinal = "";
+		
 
 		try {
 			BufferedReader nuevoBuffer = new BufferedReader(new FileReader("TweetsDB.csv"));
@@ -71,6 +74,8 @@ public abstract class DataBase {
 	public String armarLineaCSV(Status status) {
 		String line = "";
 		String tweetLimpio = "";
+		
+		String aux="";
 
 		if (status != null) {
 
@@ -109,16 +114,28 @@ public abstract class DataBase {
 
 			if (status.getUser().getLocation() != null) {
 				
-				if (status.getUser().getLocation().equals("")){
+				aux="";
+				
+				if ((status.getUser().getLocation().equals(""))||(status.getUser().getLocation().contains("Undisclosed"))){
 					line += "-";					
 				}else {
-					line += status.getUser().getLocation() + "";// user location
+								
+					aux=extractorT.extraer(status.getUser().getLocation(), "[^a-zA-ZÒ—·ÈÌÛ˙,\\s]+",CaseSensitive.INSENSITIVE);
+	
+					if (aux.length() < 2) {
+						line += "-";
+
+					}else {
+						line += aux;
+					}
+
 				}				
 				
 			} else {
 				line += "-";
 			}
 
+			line=line.replace("\n", "");//text.replace("\n", "").replace("\r", ""); TAMBIEN SE PUEDE PROBAR ESO
 			return line+" \n";
 
 		} // if status !=null

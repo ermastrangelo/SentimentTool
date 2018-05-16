@@ -57,7 +57,7 @@ public class WebSocketController {
 					if (estado==3) {
 						
 						// do Save
-						LOGGER.info("Starting to save Qlik app");
+						LOGGER.info(idCount+"- Starting to save Qlik app");
 						String newMessage="{\"jsonrpc\": \"2.0\", \"id\": "+idCount+", \"method\": \"DoSave\", \"handle\": 1, \"params\": [ ] }";
 						idCount++;
 						clientEndPoint.sendMessage(newMessage);
@@ -70,7 +70,7 @@ public class WebSocketController {
 			Thread.sleep(1000);
 			estado=0;
 			// Open TesisApp.qvf
-			LOGGER.info("Starting Open Qlik engine api session");
+			LOGGER.info(idCount+"- Starting Open Qlik engine api session");
 			newMessage = "{\"jsonrpc\": \"2.0\",\"id\": "+idCount+",\"method\": \"OpenDoc\",\"handle\": -1,\"params\": [ \"C:\\\\Users\\\\Eric\\\\Documents\\\\Qlik\\\\Sense\\\\Apps\\\\TesisApp.qvf\" ]}";
 			idCount++;
 			clientEndPoint.sendMessage(newMessage);
@@ -78,7 +78,7 @@ public class WebSocketController {
 			Thread.sleep(1000);
 
 			// modify Rest connection with parameters
-			LOGGER.info("Starting to modify the Qlik app rest connection");
+			LOGGER.info(idCount+"- Starting to modify the Qlik app rest connection");
 			newMessage = "{\"jsonrpc\": \"2.0\",\"id\": "+idCount+", \"method\": \"ModifyConnection\", \"handle\": 1, \"params\": [\"7b5d4372-3431-47b2-a60d-48d9fa719223\", {\"qName\": \"RestBackend\", \"qConnectionString\":\"CUSTOM CONNECT TO \\\"provider=QvRestConnector.exe;url=http://localhost:8080/"
 					+ action
 					+ ";timeout= "+(Integer.valueOf(cantBajar)+10)+";method=GET;autoDetectResponseType=true;keyGenerationStrategy=0;authSchema=anonymous;skipServerCertificateValidation=false;useCertificate=No;certificateStoreLocation=CurrentUser;certificateStoreName=My;queryParameters=id%2"
@@ -90,7 +90,7 @@ public class WebSocketController {
 			Thread.sleep(1000);
 			
 			// do Reload
-			LOGGER.info("Starting to reload Qlik app");
+			LOGGER.info(idCount+"- Starting to reload Qlik app");
 			newMessage="{\"jsonrpc\": \"2.0\",\"id\": "+idCount+",\"handle\": 1,\"method\": \"DoReload\",\"params\": {\"qMode\": 0,\"qPartial\": false,\"qDebug\": false}}";
 			idCount++;
 			clientEndPoint.sendMessage(newMessage);
