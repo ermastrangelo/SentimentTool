@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 
 import algorithms.AlgoritmosClasificacion;
 import analizer.ClasificadorDeSentimientos;
+import ch.qos.logback.core.net.SyslogOutputStream;
+import database.ExtractorTweets.CaseSensitive;
 import twitter4j.Status;
 
 public abstract class DataBase {
@@ -39,6 +41,7 @@ public abstract class DataBase {
 	public String returnForQlik() {
 
 		String lineaFinal = "";
+		
 
 		try {
 			BufferedReader nuevoBuffer = new BufferedReader(new FileReader("TweetsDB.csv"));
@@ -46,8 +49,12 @@ public abstract class DataBase {
 			String line = nuevoBuffer.readLine();
 
 			while (line != null) {
-
-				lineaFinal += line+"\n";
+				
+				//chequeo que no vengan lineas en blanco, que al agregar salto de linea generan entrada erronea para qlik
+				if (line.length() > 3) {
+					lineaFinal += line+"\n";
+				}
+				
 				line = nuevoBuffer.readLine();
 
 			}
@@ -65,54 +72,75 @@ public abstract class DataBase {
 	
 	
 	public String armarLineaCSV(Status status) {
-		String line="";
-		String tweetLimpio=""; 
+		String line = "";
+		String tweetLimpio = "";
 		
-		tweetLimpio=extractorT.preProcesarTweet(status.getText());
-		
-		
-		
-		line+=tweetLimpio+"	";//text
-		
-		if (tweetLimpio.length()<2){
-			line="-	-	-	-	-	-	-	-	- \n";
-			return line;			
-		}
+		String aux="";
 
-		line+=status.getRetweetCount()+"	";//retweets		
-		
-		line+=clasificador.clasificarTweets(tweetLimpio)+"	";//sentiment
-		
-		
-		line+=status.getCreatedAt().getDay()+"	";//date day		
-		line+=status.getCreatedAt().getMonth()+"	";//date month
-		line+=(status.getCreatedAt().getYear()+1900)+"	";//date year
+		if (status != null) {
 
-		//line+=status.getCreatedAt()+"	";//date time
-		
-		line+=status.getUser().getScreenName().replace("	", " ")+"	";//name
+			tweetLimpio = extractorT.preProcesarTweet(status.getText());
 
-//		if (status.getPlace()!=null) {
-//			line+=status.getPlace().getCountry()+"	";//place donde twiteo
-//		}else { line+="-	";}
-		
-		if (status.getUser()!=null) {
+			line += tweetLimpio + "	";// texto tweet
+
+			if (tweetLimpio.length() < 2) {
+				line = "NNNNNNNNNNUUUUUUUUUULLLLLLLLLLLLLLL	";
+			}
+
+			line += status.getRetweetCount() + "	";// cantidad retweets int
+
 			
-			line+=status.getUser().getLocation().replace("	", " ")+"	";//user location
+			if (tweetLimpio.length() < 2) {
+				line += "Neutral	";// tweet sentiment;
+			}else
+			{	
+				line += clasificador.clasificarTweets(tweetLimpio) + "	";// tweet sentiment
+			}
 			
-		}else { line+="-	";}
-		
-		
-//		if (status.getGeoLocation()!=null) {
-//			line+= status.getGeoLocation()+"	";//latitud longitud
-//		}else { line+="-	";}
-		
+			
 
-		line+=status.getUser().getTimeZone().replace("	", " ")+ " \n";//user timezone
+			
+			if(status.getCreatedAt()!=null){
+				line += status.getCreatedAt().getDay() + "	";// date day
+				line += status.getCreatedAt().getMonth() + "	";// date month
+				line += (status.getCreatedAt().getYear() + 1900) + "	";// date year
+				line+= status.getCreatedAt()+ "	";//date
+			} else {line += "-	-	-	-	";}
 
-		System.out.println(line.replace("	", "$"));
-		
-		return line;
+			if(status.getUser()!=null){
+				line += status.getUser().getScreenName()+ "	";// name 
+			} else {line += "-	";}
+			
+
+			if (status.getUser().getLocation() != null) {
+				
+				aux="";
+				
+				if ((status.getUser().getLocation().equals(""))||(status.getUser().getLocation().contains("Undisclosed"))){
+					line += "-";					
+				}else {
+								
+					aux=extractorT.extraer(status.getUser().getLocation(), "[^a-zA-ZñÑáéíóú,\\s]+",CaseSensitive.INSENSITIVE);
+	
+					if (aux.length() < 2) {
+						line += "-";
+
+					}else {
+						line += aux;
+					}
+
+				}				
+				
+			} else {
+				line += "-";
+			}
+
+			line=line.replace("\n", "");//text.replace("\n", "").replace("\r", ""); TAMBIEN SE PUEDE PROBAR ESO
+			return line+" \n";
+
+		} // if status !=null
+
+		return "";
 	}
 	
 	
@@ -120,9 +148,10 @@ public abstract class DataBase {
 		//guarda en la base de datos el tweet dado
 
 		try {
-			if((tweet!=null)&(tweet.length() > 1)){
-				//bw.write(tweet+ "\n");
+			if((tweet!=null)&(tweet.length() > 15)){
+				
 				bw.write(tweet);
+
 			}
 		} catch (IOException e) {
 			LOGGER.error("Writing line: " + e.getMessage());
@@ -139,5 +168,7 @@ public abstract class DataBase {
 	}
 
 	public abstract void getTweets(String userName,int cantBajar);
+	
+	
 
 }

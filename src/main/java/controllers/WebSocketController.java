@@ -27,10 +27,11 @@ public class WebSocketController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketController.class);
 	private static int idCount=1;
+	private static int estado=0;//segun la respuesta de qlik cambio de estado, para saber cuando DoSave
 	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping("/websocket")
-
+	
 	public String getKeywords(@RequestParam Map<String, String> requestParams) {
 
 		String newMessage = "";
@@ -50,52 +51,51 @@ public class WebSocketController {
 			// add listener
 			clientEndPoint.addMessageHandler(new WebsocketClientEndpoint.MessageHandler() {
 				public void handleMessage(String message) {
-					// System.out.println(message);
-					LOGGER.info("Respuesta Engine Qlik: "+message);
+
+					estado++;
+					LOGGER.info("Engine Qlik estado "+estado+": "+message);
+					if (estado==3) {
+						
+						// do Save
+						LOGGER.info(idCount+"- Starting to save Qlik app");
+						String newMessage="{\"jsonrpc\": \"2.0\", \"id\": "+idCount+", \"method\": \"DoSave\", \"handle\": 1, \"params\": [ ] }";
+						idCount++;
+						clientEndPoint.sendMessage(newMessage);
+
+					}
 				}
 			});
 
-			// wait 5 seconds for messages from websocket
-			Thread.sleep(5000);
-
+			// wait 1 seconds = 1000 miliseconds for messages from websocket (unidad en milisegundos)
+			Thread.sleep(1000);
+			estado=0;
 			// Open TesisApp.qvf
-			LOGGER.info("Starting Open Qlik engine api session");
+			LOGGER.info(idCount+"- Starting Open Qlik engine api session");
 			newMessage = "{\"jsonrpc\": \"2.0\",\"id\": "+idCount+",\"method\": \"OpenDoc\",\"handle\": -1,\"params\": [ \"C:\\\\Users\\\\Eric\\\\Documents\\\\Qlik\\\\Sense\\\\Apps\\\\TesisApp.qvf\" ]}";
 			idCount++;
 			clientEndPoint.sendMessage(newMessage);
 
-			Thread.sleep(5000);
+			Thread.sleep(1000);
 
 			// modify Rest connection with parameters
-			LOGGER.info("Starting to modify the Qlik app rest connection");
+			LOGGER.info(idCount+"- Starting to modify the Qlik app rest connection");
 			newMessage = "{\"jsonrpc\": \"2.0\",\"id\": "+idCount+", \"method\": \"ModifyConnection\", \"handle\": 1, \"params\": [\"7b5d4372-3431-47b2-a60d-48d9fa719223\", {\"qName\": \"RestBackend\", \"qConnectionString\":\"CUSTOM CONNECT TO \\\"provider=QvRestConnector.exe;url=http://localhost:8080/"
 					+ action
-					+ ";timeout=30;method=GET;autoDetectResponseType=true;keyGenerationStrategy=0;authSchema=anonymous;skipServerCertificateValidation=false;useCertificate=No;certificateStoreLocation=CurrentUser;certificateStoreName=My;queryParameters=id%2"
+					+ ";timeout= "+(Integer.valueOf(cantBajar)+10)+";method=GET;autoDetectResponseType=true;keyGenerationStrategy=0;authSchema=anonymous;skipServerCertificateValidation=false;useCertificate=No;certificateStoreLocation=CurrentUser;certificateStoreName=My;queryParameters=id%2"
 					+ tweetId + "%1user%2" + user + "%1cantBajar%2" + cantBajar
 					+ ";addMissingQueryParametersToFinalRequest=false;PaginationType=None;allowResponseHeaders=false;allowHttpsOnly=false;\\\"\", \"qType\": \"QvRestConnector.exe\"} ] }";
 			idCount++;
 			clientEndPoint.sendMessage(newMessage);
 
-			Thread.sleep(10000);
-			//Thread.sleep(25000);//se va a descargar los tweets
+			Thread.sleep(1000);
 			
 			// do Reload
-			LOGGER.info("Starting to reload Qlik app");
+			LOGGER.info(idCount+"- Starting to reload Qlik app");
 			newMessage="{\"jsonrpc\": \"2.0\",\"id\": "+idCount+",\"handle\": 1,\"method\": \"DoReload\",\"params\": {\"qMode\": 0,\"qPartial\": false,\"qDebug\": false}}";
 			idCount++;
 			clientEndPoint.sendMessage(newMessage);
 			
-			Thread.sleep(30000);
-			
-			// do Save
-			LOGGER.info("Starting to save Qlik app");
-			newMessage="{\"jsonrpc\": \"2.0\", \"id\": "+idCount+", \"method\": \"DoSave\", \"handle\": 1, \"params\": [ ] }";
-			idCount++;
-			clientEndPoint.sendMessage(newMessage);
-			
-			Thread.sleep(5000);
-
-		} catch (InterruptedException ex) {
+			} catch (InterruptedException ex) {
 			LOGGER.error("InterruptedException exception: " + ex.getMessage());
 			System.err.println("InterruptedException exception: " + ex.getMessage());
 		} catch (URISyntaxException ex) {
