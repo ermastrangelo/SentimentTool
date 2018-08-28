@@ -57,12 +57,12 @@ public class DBReplyTweets extends DataBase {
 			coments = 0;
 			String line="";
 			if (result != null) {
+				
+				System.out.println("-----------STATUS: "+result.getCount());
 
 				for (Status status : result.getTweets()) {
 
-					if (status.getInReplyToStatusId() == tweetId) {
-
-						
+					if (status.getInReplyToStatusId() == tweetId) {	
 						
 						
 						line=armarLineaCSV(status);
@@ -72,22 +72,30 @@ public class DBReplyTweets extends DataBase {
 							coments++;
 						}
 						
-						if (numBajados == cantBajar) {
-							LOGGER.info("Downloaded tweets: " + numBajados + ".");
-							return;
-						}
+//						if (numBajados == cantBajar) {System.out.println("SALIO PORQUE : numBajados == cantBajar");
+//							LOGGER.info("Downloaded tweets: " + numBajados + ".");
+//							return;
+//						}
 
 					}
 
 				}
+				
 
-				if (result.nextQuery() != null) {
-					query = result.nextQuery();
-				} else {
+				
+				query = result.nextQuery();
+				
+				if (query == null) {
 					finish = true;
+					LOGGER.info("Query obtain "+coments+ " tweets.");
+					LOGGER.info("Finish. nextQuery = null");
+				}else{
+					LOGGER.info("Query obtain "+coments+ " tweets.");
 				}
+				
 
 				if ((cantBajar != 0) && (numBajados >= cantBajar)) {
+					
 					finish = true;
 				}
 

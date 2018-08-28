@@ -1,0 +1,17 @@
+C:\Users\Eric\git\SentimentTool\src\main\java\algorithms\AlgorithmStanfordCoreNLP.java
+C:\Users\Eric\git\SentimentTool\src\main\java\controllers\UserResponse.java
+C:\Users\Eric\git\SentimentTool\src\main\java\controllers\RepliesController.java
+C:\Users\Eric\git\SentimentTool\src\main\java\database\DataBase.java
+C:\Users\Eric\git\SentimentTool\src\main\java\database\DBReplyTweets.java
+C:\Users\Eric\git\SentimentTool\src\main\java\analizer\ClasificadorDeSentimientos.java
+C:\Users\Eric\git\SentimentTool\src\main\java\controllers\WebSocketController.java
+C:\Users\Eric\git\SentimentTool\src\main\java\controllers\KeywordController.java
+C:\Users\Eric\git\SentimentTool\src\main\java\database\DBHashTag.java
+C:\Users\Eric\git\SentimentTool\src\main\java\controllers\Application.java
+C:\Users\Eric\git\SentimentTool\src\main\java\controllers\UserTweetsController.java
+C:\Users\Eric\git\SentimentTool\src\main\java\algorithms\AlgoritmosClasificacion.java
+C:\Users\Eric\git\SentimentTool\src\main\java\controllers\WebsocketClientEndpoint.java
+C:\Users\Eric\git\SentimentTool\src\main\java\algorithms\AlgorithmLingPipe.java
+C:\Users\Eric\git\SentimentTool\src\main\java\database\DBUserTweets.java
+C:\Users\Eric\git\SentimentTool\src\main\java\database\ExtractorTweets.java
+C:\Users\Eric\git\SentimentTool\src\main\java\database\DBUserResponse.java

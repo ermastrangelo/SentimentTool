@@ -91,9 +91,14 @@ export class UserComponent implements OnInit { //declaro todo esto como una clas
 	  
 	  console.log("ANALIZAR REPLIES: "+this.variablesGetReplies.userName+this.variablesGetReplies.tweetId+this.variablesGetReplies.cantidadDescargar);
 	  
+	  //original de replies
 	  this.dataService.getBackEnd('replies',this.variablesGetReplies.userName,this.variablesGetReplies.tweetId,this.variablesGetReplies.cantidadDescargar).subscribe((engine) =>   {console.log(engine);
 	  this.engine=engine;
-		} );  
+		} );
+	  //user response
+//	  this.dataService.getBackEnd('userresponse',this.variablesGetReplies.userName,this.variablesGetReplies.tweetId,this.variablesGetReplies.cantidadDescargar).subscribe((engine) =>   {console.log(engine);
+//	  this.engine=engine;
+//		} ); 
   }
   
   analizarHashtag(){
